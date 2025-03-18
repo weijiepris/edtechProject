@@ -6,7 +6,8 @@
     "skipLibCheck": true,
     "strict": true,
     "module": "esnext",
-    // "types": ["./types/global.d.ts"]
+    "types": ["./src/types/twrnc.d.ts"]
   },
+  "include": ["src", "types"],
   "exclude": ["node_modules", "babel.config.js", "metro.config.js"]
 }
