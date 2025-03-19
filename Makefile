@@ -7,11 +7,11 @@ app:
 dev:
 	@cd backend && npm run dev
 
-init:
+start:
 	@docker compose up -d
 	@echo 'postgres@${POSTGRES_VERSION} container started'
 
-destroy:
+stop:
 	@docker stop $(POSTGRES_CONTAINER_NAME)
 	@echo 'postgres@${POSTGRES_VERSION} container destroyed'
 
