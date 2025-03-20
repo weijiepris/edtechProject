@@ -1,8 +1,7 @@
 import { createServer } from 'node:http';
 import express from 'express';
 import db from './config/db';
-import { User } from './models/User';
-import { exit } from 'node:process';
+import { User } from './models/User.entity';
 const run = async () => {
   const app = express();
   const server = createServer(app);
@@ -13,6 +12,8 @@ const run = async () => {
       const user = new User();
       user.firstName = 'Timber';
       user.lastName = 'Saw';
+      user.password = '1234';
+      user.role = 'admin'
       user.age = 25;
       await db.manager.save(user);
       console.log('Saved a new user with id: ' + user.id);
@@ -26,6 +27,8 @@ const run = async () => {
     .catch(error => {
       if (error.code === 'ECONNREFUSED') {
         throw new Error('Unable to initialise database, is your container running?');
+      } else {
+        console.error('error', error);
       }
     });
 

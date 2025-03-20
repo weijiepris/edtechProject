@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-const entitiesDir = 'dist/models/*.js';
+const entitiesDir = 'dist/models/*.entity.js';
 
 const {
   POSTGRES_USER: username = 'edtechuser',
