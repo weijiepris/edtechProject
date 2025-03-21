@@ -1,3 +1,3 @@
-import express, { Router } from 'express';
+import express, { Router, Request } from 'express';
 export default express;
-export { Router };
+export { Router, Request };

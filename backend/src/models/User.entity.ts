@@ -1,4 +1,4 @@
-import { Entity, Column, CreateDateColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, Check } from 'typeorm';
 import { UserRoles } from '../utils/constants';
 import { Teacher } from './Teacher.entity';
 import { Student } from './Student.entity';
@@ -6,6 +6,7 @@ import { Parent } from './Parent.entity';
 import { BaseEntity } from './BaseEntity.entity';
 
 @Entity()
+@Check(`"email" ~* '^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$'`)
 export class User extends BaseEntity {
   @Column()
   firstName: string;
@@ -15,6 +16,9 @@ export class User extends BaseEntity {
 
   @Column()
   age: number;
+
+  @Column({ unique: true })
+  email: string;
 
   @Column({ select: false }) // Do not retrieve password by default
   password: string;
