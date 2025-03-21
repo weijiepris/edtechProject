@@ -1,14 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToOne } from 'typeorm';
-import { USER_ROLES, UserRole } from '../utils/constants';
+import { Entity, Column, CreateDateColumn, OneToOne, JoinColumn } from 'typeorm';
+import { UserRoles } from '../utils/constants';
 import { Teacher } from './Teacher.entity';
 import { Student } from './Student.entity';
 import { Parent } from './Parent.entity';
+import { BaseEntity } from './BaseEntity.entity';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends BaseEntity {
   @Column()
   firstName: string;
 
@@ -18,28 +16,25 @@ export class User {
   @Column()
   age: number;
 
-  @Column({ select: false }) // do not retrieve password by default
+  @Column({ select: false }) // Do not retrieve password by default
   password: string;
 
   @Column({
-    default: USER_ROLES.USER
+    type: 'enum',
+    enum: UserRoles,
+    default: UserRoles.USER
   })
-  role: UserRole;
+  role: UserRoles;
 
-  @OneToOne(() => Teacher, teacher => teacher.user)
+  @OneToOne(() => Teacher, teacher => teacher.user, { nullable: true })
+  @JoinColumn()
   teacher?: Teacher;
 
-  @OneToOne(() => Student, student => student.user)
+  @OneToOne(() => Student, student => student.user, { nullable: true })
+  @JoinColumn()
   student?: Student;
 
-  @OneToOne(() => Parent, parent => parent.user)
+  @OneToOne(() => Parent, parent => parent.user, { nullable: true })
+  @JoinColumn()
   parent?: Parent;
-}
-
-export interface IUser {
-  id: number;
-  firstName: string;
-  lastName: string;
-  age: number;
-  role: UserRole;
 }

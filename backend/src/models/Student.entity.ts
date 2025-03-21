@@ -1,24 +1,55 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+  ManyToMany,
+  JoinTable,
+  OneToMany
+} from 'typeorm';
 import { User } from './User.entity';
+import { Parent } from './Parent.entity';
+import { BaseEntity } from './BaseEntity.entity';
+import { StudentClass } from './StudentClass.entity';
+import { Submission } from './Submission.entity';
 
 @Entity()
-export class Student {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Student extends BaseEntity {
   @OneToOne(() => User, user => user.student)
   @JoinColumn()
   user: User;
 
-  @Column()
-  grade: string;
-
-  @Column()
-  school: string;
+  @Column({ nullable: true })
+  grade?: string;
 
   @Column({ nullable: true })
-  parentId?: string; // Optional reference to the parent
+  school?: string;
+
+  @ManyToOne(() => Parent, parent => parent.children, { nullable: true })
+  @JoinColumn({ name: 'parentId' })
+  parent?: Parent;
 
   @Column({ default: true })
   isActive: boolean;
+
+  @ManyToMany(() => Student, student => student.friends)
+  @JoinTable({
+    name: 'student_friends', // Define the junction table name
+    joinColumn: {
+      name: 'studentId',
+      referencedColumnName: 'uuid'
+    },
+    inverseJoinColumn: {
+      name: 'friendId',
+      referencedColumnName: 'uuid'
+    }
+  })
+  friends: Student[];
+
+  @OneToMany(() => StudentClass, studentClass => studentClass.student)
+  studentClasses: StudentClass[];
+
+  @OneToMany(() => Submission, submission => submission.student)
+  submissions: Submission[];
 }

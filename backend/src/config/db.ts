@@ -8,7 +8,7 @@ const {
   POSTGRES_DB: database = 'edtech'
 } = process.env;
 
-export default new DataSource({
+export const db = new DataSource({
   type: 'postgres',
   host: 'localhost',
   port: 5432,
@@ -21,3 +21,5 @@ export default new DataSource({
   migrations: [],
   subscribers: []
 });
+
+export default db;

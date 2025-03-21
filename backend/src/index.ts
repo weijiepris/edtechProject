@@ -1,36 +1,28 @@
 import { createServer } from 'node:http';
-import express from 'express';
+import express from './expressModule';
 import db from './config/db';
-import { User } from './models/User.entity';
-const run = async () => {
-  const app = express();
-  const server = createServer(app);
+import { useRoutes } from './services';
+import { applyMiddleware } from './middleware';
 
+const run = async () => {
   db.initialize()
     .then(async () => {
-      console.log('Inserting a new user into the database...');
-      const user = new User();
-      user.firstName = 'Timber';
-      user.lastName = 'Saw';
-      user.password = '1234';
-      user.role = 'admin'
-      user.age = 25;
-      await db.manager.save(user);
-      console.log('Saved a new user with id: ' + user.id);
-
-      console.log('Loading users from the database...');
-      const users = await db.manager.find(User);
-      console.log('Loaded users: ', users);
-
-      console.log('Here you can setup and run express / fastify / any other framework.');
+      console.info('Database connection initialised');
     })
     .catch(error => {
       if (error.code === 'ECONNREFUSED') {
         throw new Error('Unable to initialise database, is your container running?');
       } else {
-        console.error('error', error);
+        console.error('database has error: ', error);
       }
     });
+
+  const app = express();
+
+  applyMiddleware(app);
+  useRoutes(app);
+
+  const server = createServer(app);
 
   const PORT = parseInt(process.env.PORT || '8000');
   server.listen(PORT, '0.0.0.0', () => {
