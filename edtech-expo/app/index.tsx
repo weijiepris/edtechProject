@@ -1,32 +1,53 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
-import { useRouter } from "expo-router";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Image } from "expo-image";
 import { SafeAreaView } from "react-native-safe-area-context";
 import image from "../assets/images/login-screen.png";
-export default function index() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import InputText from "./components/InputText";
+import axios from "axios";
 
-  const handleLogin = () => {
-    if (email === "user@example.com" && password === "password123") {
-      router.push("/Home");
-    } else {
-      Alert.alert(
-        "Invalid Credentials",
-        "Please check your email and password."
-      );
-    }
+export default function index() {
+  const [email, setEmail] = useState("");
+  const [hasEmailError, setHasEmailError] = useState<boolean>(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
+  const [password, setPassword] = useState("");
+  const [hasPasswordError, setHasPasswordError] = useState<boolean>(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
+
+  const handleLogin = async () => {
+    await axios
+      .post("http://10.0.2.2:8000/auth/login", { email, password })
+      .then(() => {
+        console.log("success");
+      })
+      .catch((err) => {
+        showErrorInput(err.response.data.message);
+        console.log(`${err.response.data.message}`);
+      });
   };
+
+  const onEmailChange = (value: string) => {
+    setEmail(value);
+    resetFields();
+  };
+  const onPasswordChange = (value: string) => {
+    setPassword(value);
+    resetFields();
+  };
+
+  const resetFields = () => {
+    setHasEmailError(false);
+    setHasPasswordError(false);
+    setPasswordErrorMessage("");
+  };
+
+  const showErrorInput = (errorMessage: string) => {
+    setHasEmailError(true);
+    setEmailErrorMessage("");
+    setHasPasswordError(true);
+    setPasswordErrorMessage(errorMessage);
+  };
+
   return (
     <SafeAreaView style={styles.body}>
       <View>
@@ -39,21 +60,24 @@ export default function index() {
       </View>
       <View style={styles.form}>
         <Text style={styles.title}>Login</Text>
-        <TextInput
+        <InputText
           style={styles.input}
           placeholder="Email"
-          placeholderTextColor="#ccc"
           autoCapitalize="none"
           value={email}
-          onChangeText={setEmail}
+          errorMessage={emailErrorMessage}
+          hasError={hasEmailError}
+          hideErrorMessage={true}
+          onChangeText={onEmailChange}
         />
-        <TextInput
+        <InputText
           style={styles.input}
           placeholder="Password"
-          placeholderTextColor="#ccc"
           secureTextEntry
           value={password}
-          onChangeText={setPassword}
+          errorMessage={passwordErrorMessage}
+          hasError={hasPasswordError}
+          onChangeText={onPasswordChange}
         />
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>

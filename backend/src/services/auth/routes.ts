@@ -13,7 +13,8 @@ export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(400).json({ message: 'Email and password are required' });
+    console.info({ message: 'Email or password are empty' });
+    res.status(400).json({ message: 'You have entered an invalid login details!' });
     return;
   }
 
@@ -24,13 +25,15 @@ export const login = async (req: Request, res: Response) => {
     });
 
     if (!user) {
-      res.status(401).json({ message: 'Invalid email or password' });
+      console.info({ message: 'user does not exist' });
+      res.status(401).json({ message: 'You have entered an invalid login details!' });
       return;
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      res.status(401).json({ message: 'Invalid email or password' });
+      console.info({ message: 'password dont match' });
+      res.status(401).json({ message: 'You have entered an invalid login details!' });
       return;
     }
 
