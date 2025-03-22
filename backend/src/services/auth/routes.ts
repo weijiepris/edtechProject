@@ -123,3 +123,44 @@ export const logout = (req: Request, res: Response) => {
     return;
   });
 };
+
+export const validate = async (req: Request, res: Response) => {
+  const authHeader = req.headers['authorization'];
+  const sessionToken = req.session.token;
+  const message = 'Not logged in';
+
+  if (!authHeader && !sessionToken) {
+    console.info({ authError: 'Unauthorized: no token found' });
+    res.status(401).json({ message });
+    return;
+  }
+
+  const token = authHeader?.split(' ')[1] || sessionToken;
+  if (!token) {
+    console.info({ authError: 'Unauthorized: Invalid token format' });
+    res.status(401).json({ message });
+    return;
+  }
+
+  try {
+    const decoded: any = jwt.verify(token, JWT_SECRET);
+
+    const user = await User.findOne({
+      where: {
+        uuid: decoded.uuid
+      }
+    });
+
+    if (!user) {
+      console.info({ authError: `user object not found: ${decoded.uuid}` });
+      res.status(401).json({ message });
+      return;
+    }
+
+    res.status(200).json({ message: 'success' });
+  } catch (error) {
+    console.error({ message: 'Unauthorized: Invalid token' });
+    res.status(401).json({ message });
+    return;
+  }
+};
