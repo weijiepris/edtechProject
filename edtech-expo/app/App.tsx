@@ -1,21 +1,15 @@
 import React from "react";
 import Login from "./pages/Login/Login";
-import useAuthentication from "./hooks/useAuthentication";
+// import useAuthentication from "./hooks/useAuthentication";
 import { Text, View } from "react-native";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import { useAuth } from "./hooks/useAuth";
 
 const App = () => {
-  const { isAuthenticated, error, loading, validateToken } =
-    useAuthentication();
+  const { loading, isAuthenticated, validateToken } = useAuth();
 
   if (loading) return <View></View>;
-
-  if (isAuthenticated)
-    return (
-      <View>
-        <Text>You're logged in</Text>
-      </View>
-    );
-
+  if (isAuthenticated) return <Dashboard />;
   return <Login validateToken={validateToken} />;
 };
 

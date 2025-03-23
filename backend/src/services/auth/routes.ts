@@ -164,3 +164,20 @@ export const validate = async (req: Request, res: Response) => {
     return;
   }
 };
+
+export const getAccount = async (req: Request, res: Response) => {
+  const { uuid } = req.user ?? {};
+
+  const user = await User.findOneBy({
+    uuid
+  });
+
+  if (!user) {
+    console.info({ authError: `[getAccount] Unable to find user account: ${uuid}` });
+    res.status(401).json({ message: 'Not logged in' });
+    return;
+  }
+
+  res.status(200).json(user);
+  return;
+};

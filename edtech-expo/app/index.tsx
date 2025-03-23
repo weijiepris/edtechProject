@@ -1,8 +1,13 @@
 import React from "react";
 import App from "./App";
+import { AuthProvider } from "./hooks/useAuth";
 
 const Index = () => {
-  return <App />;
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
 };
 
 export default Index;
