@@ -1,0 +1,59 @@
+import { Feather, MaterialIcons } from "@expo/vector-icons";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+
+export const Badges: React.FC = () => {
+  return (
+    <View style={styles.badgesChatsContainer}>
+      <View style={styles.badgesContainer}>
+        <View style={styles.iconTitleContainer}>
+          <Feather name="codesandbox" size={34} color="black" />
+          <Text style={styles.iconTitle}>Badges</Text>
+        </View>
+      </View>
+      <View style={styles.chatsContainer}>
+        <View style={styles.iconTitleContainer}>
+          <MaterialIcons name="chat-bubble-outline" size={34} color="black" />
+          <Text style={styles.iconTitle}>Chats</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  iconTitleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: 15,
+    marginLeft: 15,
+  },
+  iconTitle: {
+    marginLeft: 7,
+    marginTop: 7,
+    marginBottom: 9,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  badgesChatsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: 19,
+  },
+  badgesContainer: {
+    backgroundColor: "#EAEAEA",
+    height: 132,
+    width: 181,
+    marginLeft: 19,
+    borderRadius: 15,
+    display: "flex",
+    flexDirection: "column",
+  },
+  chatsContainer: {
+    backgroundColor: "#EAEAEA",
+    height: 132,
+    width: 181,
+    marginLeft: 11,
+    borderRadius: 15,
+  },
+});
