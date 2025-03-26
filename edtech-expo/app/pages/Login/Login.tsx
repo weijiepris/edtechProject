@@ -11,10 +11,10 @@ interface ILogin {
 }
 
 const Login: React.FC<ILogin> = ({ validateToken }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("test@here.com");
   const [hasEmailError, setHasEmailError] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("password");
   const [hasPasswordError, setHasPasswordError] = useState<boolean>(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
 

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Feather, MaterialIcons, Entypo } from "@expo/vector-icons";
 
 const Dashboard = () => {
   const { user, loading: userLoading } = useAccount();
@@ -18,6 +19,69 @@ const Dashboard = () => {
   if (!userLoading && !user) {
     validateToken();
   }
+
+  const Courses: React.FC = () => {
+    return (
+      <View style={styles.coursesContainer}>
+        <Text style={styles.title}>Courses</Text>
+        {/* Courses tab section*/}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false} // Hide scrollbar
+          contentContainerStyle={styles.courseTabContainer}
+        >
+          <TouchableOpacity style={styles.courseTabs}>
+            <Text style={styles.courseTitle}>
+              CS6460
+              <Entypo name="chevron-right" size={24} color="black" />
+            </Text>
+            <Text style={styles.courseSubTitle}>Educational Technology</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.courseTabs}>
+            <Text style={styles.courseTitle}>
+              CS6460
+              <Entypo name="chevron-right" size={24} color="black" />
+            </Text>
+            <Text style={styles.courseSubTitle}>Educational Technology</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.courseTabs}>
+            <Text style={styles.courseTitle}>
+              CS6460
+              <Entypo name="chevron-right" size={24} color="black" />
+            </Text>
+            <Text style={styles.courseSubTitle}>Educational Technology</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    );
+  };
+
+  const Badges: React.FC = () => {
+    return (
+      <View style={styles.badgesChatsContainer}>
+        <View style={styles.badgesContainer}>
+          <View style={styles.iconTitleContainer}>
+            <Feather name="codesandbox" size={34} color="black" />
+            <Text style={styles.iconTitle}>Badges</Text>
+          </View>
+        </View>
+        <View style={styles.chatsContainer}>
+          <View style={styles.iconTitleContainer}>
+            <MaterialIcons name="chat-bubble-outline" size={34} color="black" />
+            <Text style={styles.iconTitle}>Chats</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const Discussions: React.FC = () => {
+    return <View></View>;
+  };
+
+  const Announcements: React.FC = () => {
+    return <View></View>;
+  };
 
   return (
     <View style={styles.container}>
@@ -29,34 +93,13 @@ const Dashboard = () => {
         </Text>
       </View>
       {/* Courses section */}
-      <View style={styles.courses}>
-        <Text style={styles.title}>Courses</Text>
-        {/* Courses tab section*/}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false} // Hide scrollbar
-          contentContainerStyle={styles.courseTabContainer}
-        >
-          <TouchableOpacity style={styles.courseTabs}>
-            <Text style={styles.courseTitle}>CS6460</Text>
-            <Text style={styles.courseSubTitle}>Educational Technology</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.courseTabs}>
-            <Text style={styles.courseTitle}>CS6460</Text>
-            <Text style={styles.courseSubTitle}>Educational Technology</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.courseTabs}>
-            <Text style={styles.courseTitle}>CS6460</Text>
-            <Text style={styles.courseSubTitle}>Educational Technology</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
+      <Courses />
       {/* Badge & Chat section */}
-      <View></View>
+      <Badges />
       {/* Discussion section */}
-      <View></View>
+      <Discussions />
       {/* Announcement section */}
-      <View></View>
+      <Announcements />
     </View>
   );
 };
@@ -70,25 +113,13 @@ const styles = StyleSheet.create({
   courseTabContainer: {
     display: "flex",
     flexDirection: "row",
-  },
-  courses: {
-    backgroundColor: "#EAEAEA",
-    height: 232,
-    margin: 19,
-    borderRadius: 15,
-  },
-  title: {
-    marginLeft: 15,
-    marginTop: 15,
-    marginBottom: 9,
-    fontSize: 16,
-    fontWeight: "bold",
+    gap: 15,
+    paddingHorizontal: 15,
   },
   courseTabs: {
     backgroundColor: "#D9D9D9",
     height: 71,
     width: 144,
-    marginLeft: 15,
     borderRadius: 15,
   },
   courseTitle: {
@@ -102,5 +133,48 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 11,
     marginLeft: 11,
+  },
+  coursesContainer: {
+    backgroundColor: "#EAEAEA",
+    height: 232,
+    margin: 19,
+    borderRadius: 15,
+  },
+  title: {
+    marginLeft: 15,
+    marginTop: 15,
+    marginBottom: 9,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  iconTitleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: 15,
+    marginLeft: 15,
+  },
+  iconTitle: {
+    marginLeft: 7,
+    marginTop: 7,
+    marginBottom: 9,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  badgesChatsContainer: { display: "flex", flexDirection: "row" },
+  badgesContainer: {
+    backgroundColor: "#EAEAEA",
+    height: 132,
+    width: 181,
+    marginLeft: 19,
+    borderRadius: 15,
+    display: "flex",
+    flexDirection: "column",
+  },
+  chatsContainer: {
+    backgroundColor: "#EAEAEA",
+    height: 132,
+    width: 181,
+    marginLeft: 11,
+    borderRadius: 15,
   },
 });
