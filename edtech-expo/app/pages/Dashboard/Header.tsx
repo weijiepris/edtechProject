@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 3,
     justifyContent: "space-between",
-    marginLeft: 15,
+    marginLeft: 5,
     gap: 20,
   },
 });
