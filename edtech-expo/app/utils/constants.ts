@@ -30,4 +30,5 @@ export const RoleDisplayMapping = new Map<UserRoles, string>([
   [UserRoles.USER, "USER"],
   [UserRoles.PARENT, "PARENT"],
   [UserRoles.TEACHER, "TEACHER"],
+  [UserRoles.STUDENT, "STUDENT"],
 ]);
