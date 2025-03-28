@@ -16,7 +16,7 @@ const useAuthentication = () => {
   const [state, setState] = useState<AuthState>({
     isAuthenticated: false,
     loading: true,
-    error: undefined
+    error: undefined,
   });
 
   const validateToken = async (skipRequest: boolean = false) => {
@@ -27,7 +27,7 @@ const useAuthentication = () => {
         setState({
           isAuthenticated: true,
           loading: false,
-          error: undefined
+          error: undefined,
         });
         return;
       }
@@ -39,14 +39,14 @@ const useAuthentication = () => {
       setState({
         isAuthenticated: true,
         loading: false,
-        error: undefined
+        error: undefined,
       });
     } catch (error: any) {
       await AsyncStorage.removeItem('token');
       setState({
         isAuthenticated: false,
         loading: false,
-        error: error?.response?.data?.message || 'Failed to validate token'
+        error: error?.response?.data?.message || 'Failed to validate token',
       });
     }
   };
@@ -59,7 +59,7 @@ const useAuthentication = () => {
     isAuthenticated: state.isAuthenticated,
     loading: state.loading,
     error: state.error,
-    validateToken
+    validateToken,
   };
 };
 

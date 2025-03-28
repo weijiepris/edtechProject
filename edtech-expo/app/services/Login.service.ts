@@ -6,7 +6,7 @@ export const handleLogin = async ({
   email,
   password,
   validateToken,
-  fn
+  fn,
 }: {
   email: string;
   password: string;

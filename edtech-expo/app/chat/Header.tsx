@@ -38,10 +38,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 30,
     gap: 40,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   searchInput: {
     width: 250,
-    borderRadius: 30
-  }
+    borderRadius: 30,
+  },
 });

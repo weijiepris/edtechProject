@@ -31,25 +31,25 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     padding: 30,
-    gap: 20
+    gap: 20,
   },
   profileIcon: {
     height: 48,
     width: 48,
     backgroundColor: '#E1E1E1',
-    borderRadius: 100
+    borderRadius: 100,
   },
   name: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   message: {
     display: 'flex',
     flexDirection: 'column',
     gap: 10,
-    width: 250
+    width: 250,
   },
   text: {
     maxWidth: 200,
-    color: 'gray'
-  }
+    color: 'gray',
+  },
 });

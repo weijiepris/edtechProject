@@ -8,7 +8,7 @@ export default function Layout() {
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <Stack
         screenOptions={{
-          headerShown: false // default: hide headers for all
+          headerShown: false, // default: hide headers for all
         }}
       >
         <Stack.Screen name="chat" />

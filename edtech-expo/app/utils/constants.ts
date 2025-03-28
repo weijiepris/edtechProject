@@ -7,7 +7,7 @@ export enum UserRoles {
   STUDENT = 'student',
   PARENT = 'parent',
   TEACHER = 'teacher',
-  USER = 'user'
+  USER = 'user',
 }
 
 export interface IUser extends IBaseEntity {
@@ -29,5 +29,5 @@ export const RoleDisplayMapping = new Map<UserRoles, string>([
   [UserRoles.USER, 'USER'],
   [UserRoles.PARENT, 'PARENT'],
   [UserRoles.TEACHER, 'LECTURER'],
-  [UserRoles.STUDENT, 'STUDENT']
+  [UserRoles.STUDENT, 'STUDENT'],
 ]);

@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     height: 300,
     backgroundColor: '#FFF',
     paddingHorizontal: 30,
-    paddingTop: 50
+    paddingTop: 50,
   },
   textbox: { height: 100, width: 300 },
   icons: {
@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
     marginTop: 30,
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 });

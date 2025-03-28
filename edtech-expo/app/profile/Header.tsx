@@ -26,16 +26,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 30,
     gap: 130,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   searchInput: {
     width: 250,
-    borderRadius: 30
+    borderRadius: 30,
   },
   icon: {
     height: 48,
     width: 48,
     borderRadius: 100,
-    backgroundColor: '#E1E1E1'
-  }
+    backgroundColor: '#E1E1E1',
+  },
 });

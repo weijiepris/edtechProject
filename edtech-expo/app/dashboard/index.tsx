@@ -32,6 +32,6 @@ export default Dashboard;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF'
-  }
+    backgroundColor: '#FFF',
+  },
 });

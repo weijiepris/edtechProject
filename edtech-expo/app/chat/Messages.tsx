@@ -22,17 +22,17 @@ export default Messages;
 const styles = StyleSheet.create({
   container: {
     marginTop: 6,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   messageContainer: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   divider: {
     width: 310,
     height: 1,
     alignSelf: 'center',
-    borderColor: '#D9D9D9'
-  }
+    borderColor: '#D9D9D9',
+  },
 });

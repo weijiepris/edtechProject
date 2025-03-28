@@ -33,19 +33,19 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginTop: 15,
-    marginLeft: 15
+    marginLeft: 15,
   },
   iconTitle: {
     marginLeft: 7,
     marginTop: 7,
     marginBottom: 9,
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   badgesChatsContainer: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: 19
+    marginBottom: 19,
   },
   badgesContainer: {
     backgroundColor: '#EAEAEA',
@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
     marginLeft: 19,
     borderRadius: 15,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   chatsContainer: {
     backgroundColor: '#EAEAEA',
     height: 132,
     width: 181,
     marginLeft: 11,
-    borderRadius: 15
-  }
+    borderRadius: 15,
+  },
 });

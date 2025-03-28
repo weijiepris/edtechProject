@@ -45,7 +45,7 @@ export default InputText;
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16
+    marginBottom: 16,
   },
   textboxWrapper: {
     flexDirection: 'row',
@@ -55,23 +55,23 @@ const styles = StyleSheet.create({
     borderColor: '#E0E0E0',
     borderRadius: 8,
     paddingHorizontal: 16,
-    height: 50
+    height: 50,
   },
   input: {
     flex: 1,
     fontSize: 16,
-    color: '#333'
+    color: '#333',
   },
   icon: {
-    marginLeft: 8
+    marginLeft: 8,
   },
   inputError: {
-    borderColor: '#DA7676'
+    borderColor: '#DA7676',
   },
   errorMessage: {
     color: '#DA7676',
     paddingLeft: 10,
     fontSize: 14,
-    marginTop: 4
-  }
+    marginTop: 4,
+  },
 });

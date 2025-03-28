@@ -12,7 +12,7 @@ const useAccount = () => {
   const [{ user, loading, error }, setState] = useState<AccountState>({
     user: null,
     loading: true,
-    error: undefined
+    error: undefined,
   });
 
   const fetchAccount = async () => {
@@ -23,13 +23,13 @@ const useAccount = () => {
       setState({
         user: response.data,
         loading: false,
-        error: undefined
+        error: undefined,
       });
     } catch (error: any) {
       setState({
         user: null,
         loading: false,
-        error: error?.response?.data?.message || 'Failed to load user data'
+        error: error?.response?.data?.message || 'Failed to load user data',
       });
     }
   };
@@ -42,7 +42,7 @@ const useAccount = () => {
     user,
     loading,
     error,
-    refresh: fetchAccount
+    refresh: fetchAccount,
   };
 };
 

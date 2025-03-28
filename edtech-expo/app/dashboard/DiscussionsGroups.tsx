@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   discussionsGroupContainer: {
     display: 'flex',
     flexDirection: 'row',
-    marginBottom: 19
+    marginBottom: 19,
   },
   discussionsContainer: {
     backgroundColor: '#EAEAEA',
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#EAEAEA',
     borderBottomColor: '#EAEAEA',
     borderRightColor: '#000',
-    borderWidth: 0.5
+    borderWidth: 0.5,
   },
   groupsContainer: {
     backgroundColor: '#EAEAEA',
@@ -36,6 +36,6 @@ const styles = StyleSheet.create({
     borderTopColor: '#EAEAEA',
     borderBottomColor: '#EAEAEA',
     borderRightColor: '#EAEAEA',
-    borderWidth: 0.5
-  }
+    borderWidth: 0.5,
+  },
 });

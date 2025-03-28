@@ -12,6 +12,6 @@ const styles = StyleSheet.create({
     marginTop: 6,
     display: 'flex',
     height: 500,
-    backgroundColor: '#FFF'
-  }
+    backgroundColor: '#FFF',
+  },
 });

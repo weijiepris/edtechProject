@@ -15,10 +15,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 9,
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   announcementsContainer: {
     backgroundColor: '#EAEAEA',
-    height: 300
-  }
+    height: 300,
+  },
 });

@@ -44,13 +44,13 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    height: 100
+    height: 100,
   },
   headerContainer: {
     display: 'flex',
     flexDirection: 'row',
     marginTop: 31,
-    paddingLeft: 31
+    paddingLeft: 31,
   },
   userIcon: {
     height: 52,
@@ -59,11 +59,11 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 35
+    marginRight: 35,
   },
   userRole: {
     fontWeight: 'bold',
-    fontSize: 36
+    fontSize: 36,
   },
   searchBellDefault: {
     display: 'flex',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     justifyContent: 'space-between',
     paddingHorizontal: 70,
-    gap: 35
+    gap: 35,
   },
   searchBellParent: {
     display: 'flex',
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     justifyContent: 'space-between',
     gap: 30,
-    marginLeft: 35
+    marginLeft: 35,
   },
   searchBellStudent: {
     display: 'flex',
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     justifyContent: 'space-between',
     gap: 25,
-    marginLeft: 15
+    marginLeft: 15,
   },
   searchBellTeacher: {
     display: 'flex',
@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
     marginTop: 3,
     justifyContent: 'space-between',
     marginLeft: 5,
-    gap: 20
-  }
+    gap: 20,
+  },
 });

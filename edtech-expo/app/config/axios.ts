@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../utils/constants';
 
 const API_CREATE = axios.create({
-  baseURL: BASE_URL
+  baseURL: BASE_URL,
 });
 
 export const useAxios = async () => {
@@ -16,6 +16,6 @@ export const useAxios = async () => {
       }
       return config;
     },
-    error => Promise.reject(error)
+    error => Promise.reject(error),
   );
 };

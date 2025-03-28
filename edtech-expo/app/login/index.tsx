@@ -83,42 +83,42 @@ export default Login;
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   image: {
     width: 'auto',
-    height: 350
+    height: 350,
   },
   form: {
     paddingHorizontal: 30,
-    borderRadius: 16
+    borderRadius: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'left',
-    marginBottom: 20
+    marginBottom: 20,
   },
   button: {
     backgroundColor: '#0068FF',
     paddingVertical: 14,
     borderRadius: 8,
     marginTop: 10,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttonText: {
     color: '#FFF',
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   forgetPassword: {
     paddingVertical: 14,
     marginTop: 10,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   forgetPasswordText: {
     color: '#000',
     fontSize: 18,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });

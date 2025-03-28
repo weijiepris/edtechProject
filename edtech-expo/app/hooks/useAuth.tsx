@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<AuthState>({
     isAuthenticated: false,
     loading: true,
-    error: undefined
+    error: undefined,
   });
 
   const validateToken = async (skipRequest: boolean = false) => {
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setState({
           isAuthenticated: true,
           loading: false,
-          error: undefined
+          error: undefined,
         });
         return;
       }
@@ -52,14 +52,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setState({
         isAuthenticated: true,
         loading: false,
-        error: undefined
+        error: undefined,
       });
     } catch (error: any) {
       await AsyncStorage.removeItem('token');
       setState({
         isAuthenticated: false,
         loading: false,
-        error: error?.response?.data?.message || 'Failed to validate token'
+        error: error?.response?.data?.message || 'Failed to validate token',
       });
     }
   };
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       value={{
         ...state,
         validateToken,
-        logout
+        logout,
       }}
     >
       {children}
