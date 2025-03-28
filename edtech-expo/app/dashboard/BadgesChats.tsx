@@ -1,8 +1,15 @@
 import { Feather, MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export const Badges: React.FC = () => {
+  const router = useRouter();
+
+  const goTo = (page: string) => {
+    router.push(page);
+  };
+
   return (
     <View style={styles.badgesChatsContainer}>
       <View style={styles.badgesContainer}>
@@ -11,12 +18,15 @@ export const Badges: React.FC = () => {
           <Text style={styles.iconTitle}>Badges</Text>
         </View>
       </View>
-      <View style={styles.chatsContainer}>
+      <TouchableOpacity
+        style={styles.chatsContainer}
+        onPress={() => goTo("/chat")}
+      >
         <View style={styles.iconTitleContainer}>
           <MaterialIcons name="chat-bubble-outline" size={34} color="black" />
           <Text style={styles.iconTitle}>Chats</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

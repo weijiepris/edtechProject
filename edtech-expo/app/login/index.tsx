@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Image } from "expo-image";
 import { SafeAreaView } from "react-native-safe-area-context";
-import image from "../../../assets/images/login-screen.png";
-import InputText from "../../components/InputText";
-import { handleLogin } from "./Login.service";
+import image from "../../assets/images/login-screen.png";
+import InputText from "@/app/components/InputText";
+import { handleLogin } from "@/app/services/Login.service";
 
 interface ILogin {
   validateToken: Function;
@@ -53,7 +53,6 @@ const Login: React.FC<ILogin> = ({ validateToken }) => {
       <View style={styles.form}>
         <Text style={styles.title}>Login</Text>
         <InputText
-          style={styles.input}
           placeholder="Email"
           autoCapitalize="none"
           value={email}
@@ -63,7 +62,6 @@ const Login: React.FC<ILogin> = ({ validateToken }) => {
           onChangeText={onEmailChange}
         />
         <InputText
-          style={styles.input}
           placeholder="Password"
           secureTextEntry
           value={password}
@@ -73,7 +71,9 @@ const Login: React.FC<ILogin> = ({ validateToken }) => {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => handleLogin({ email, password, validateToken, fn: showErrorInput })}
+          onPress={() =>
+            handleLogin({ email, password, validateToken, fn: showErrorInput })
+          }
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
@@ -105,17 +105,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
     marginBottom: 20,
-  },
-  input: {
-    height: 50,
-    // backgroundColor: "#F5F5F5",
-    marginBottom: 12,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    fontSize: 16,
-    color: "#333",
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
   },
   button: {
     backgroundColor: "#0068FF",

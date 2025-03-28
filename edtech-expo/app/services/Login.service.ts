@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BASE_URL } from "../../utils/constants";
-import { useAxios } from "../../config/axios";
 import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+import { useAxios } from "../config/axios";
 export const handleLogin = async ({
   email,
   password,
