@@ -9,18 +9,10 @@ interface IHeader {
 }
 
 const Header: React.FC<IHeader> = ({ router }) => {
-  const [search, setSearch] = useState<string>('');
-
   return (
     <View style={styles.container}>
       <Entypo name="chevron-left" size={48} color="black" onPress={() => router.goBack()} />
-      <InputText
-        placeholder="Search"
-        showIcon={true}
-        value={search}
-        onChangeText={setSearch}
-        style={styles.searchInput}
-      />
+      <View style={styles.icon}></View>
     </View>
   );
 };
@@ -29,15 +21,21 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    height: 130,
+    height: 110,
     display: 'flex',
     flexDirection: 'row',
     paddingVertical: 30,
-    gap: 40,
+    gap: 130,
     backgroundColor: '#FFF'
   },
   searchInput: {
     width: 250,
     borderRadius: 30
+  },
+  icon: {
+    height: 48,
+    width: 48,
+    borderRadius: 100,
+    backgroundColor: '#E1E1E1'
   }
 });

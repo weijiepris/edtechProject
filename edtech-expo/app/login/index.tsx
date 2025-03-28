@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-import { Image } from "expo-image";
-import { SafeAreaView } from "react-native-safe-area-context";
-import image from "../../assets/images/login-screen.png";
-import InputText from "@/app/components/InputText";
-import { handleLogin } from "@/app/services/Login.service";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Image } from 'expo-image';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import image from '../../assets/images/login-screen.png';
+import InputText from '@/app/components/InputText';
+import { handleLogin } from '@/app/services/Login.service';
 
 interface ILogin {
   validateToken: Function;
 }
 
 const Login: React.FC<ILogin> = ({ validateToken }) => {
-  const [email, setEmail] = useState("test@here.com");
+  const [email, setEmail] = useState('test@here.com');
   const [hasEmailError, setHasEmailError] = useState<boolean>(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
-  const [password, setPassword] = useState("password");
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
+  const [password, setPassword] = useState('password');
   const [hasPasswordError, setHasPasswordError] = useState<boolean>(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>('');
 
   const onEmailChange = (value: string) => {
     setEmail(value);
@@ -30,12 +30,12 @@ const Login: React.FC<ILogin> = ({ validateToken }) => {
   const resetFields = () => {
     setHasEmailError(false);
     setHasPasswordError(false);
-    setPasswordErrorMessage("");
+    setPasswordErrorMessage('');
   };
 
   const showErrorInput = (errorMessage: string) => {
     setHasEmailError(true);
-    setEmailErrorMessage("");
+    setEmailErrorMessage('');
     setHasPasswordError(true);
     setPasswordErrorMessage(errorMessage);
   };
@@ -43,12 +43,7 @@ const Login: React.FC<ILogin> = ({ validateToken }) => {
   return (
     <SafeAreaView style={styles.body}>
       <View>
-        <Image
-          source={image}
-          style={styles.image}
-          contentFit="contain"
-          transition={500}
-        />
+        <Image source={image} style={styles.image} contentFit="contain" transition={500} />
       </View>
       <View style={styles.form}>
         <Text style={styles.title}>Login</Text>
@@ -71,9 +66,7 @@ const Login: React.FC<ILogin> = ({ validateToken }) => {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() =>
-            handleLogin({ email, password, validateToken, fn: showErrorInput })
-          }
+          onPress={() => handleLogin({ email, password, validateToken, fn: showErrorInput })}
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
@@ -90,42 +83,42 @@ export default Login;
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF'
   },
   image: {
-    width: "auto",
-    height: 350,
+    width: 'auto',
+    height: 350
   },
   form: {
     paddingHorizontal: 30,
-    borderRadius: 16,
+    borderRadius: 16
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "left",
-    marginBottom: 20,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    marginBottom: 20
   },
   button: {
-    backgroundColor: "#0068FF",
+    backgroundColor: '#0068FF',
     paddingVertical: 14,
     borderRadius: 8,
     marginTop: 10,
-    alignItems: "center",
+    alignItems: 'center'
   },
   buttonText: {
-    color: "#FFF",
+    color: '#FFF',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold'
   },
   forgetPassword: {
     paddingVertical: 14,
     marginTop: 10,
-    alignItems: "center",
+    alignItems: 'center'
   },
   forgetPasswordText: {
-    color: "#000",
+    color: '#000',
     fontSize: 18,
-    fontWeight: "bold",
-  },
+    fontWeight: 'bold'
+  }
 });

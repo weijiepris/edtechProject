@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 export const Discussions: React.FC = () => {
   return (
@@ -12,30 +12,30 @@ export const Discussions: React.FC = () => {
 
 const styles = StyleSheet.create({
   discussionsGroupContainer: {
-    display: "flex",
-    flexDirection: "row",
-    marginBottom: 19,
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: 19
   },
   discussionsContainer: {
-    backgroundColor: "#EAEAEA",
+    backgroundColor: '#EAEAEA',
     height: 174,
     width: 205.5,
-    borderStyle: "solid",
-    borderLeftColor: "#EAEAEA",
-    borderTopColor: "#EAEAEA",
-    borderBottomColor: "#EAEAEA",
-    borderRightColor: "#000",
-    borderWidth: 0.5,
+    borderStyle: 'solid',
+    borderLeftColor: '#EAEAEA',
+    borderTopColor: '#EAEAEA',
+    borderBottomColor: '#EAEAEA',
+    borderRightColor: '#000',
+    borderWidth: 0.5
   },
   groupsContainer: {
-    backgroundColor: "#EAEAEA",
+    backgroundColor: '#EAEAEA',
     height: 174,
     width: 205.5,
-    borderStyle: "solid",
-    borderLeftColor: "#000",
-    borderTopColor: "#EAEAEA",
-    borderBottomColor: "#EAEAEA",
-    borderRightColor: "#EAEAEA",
-    borderWidth: 0.5,
-  },
+    borderStyle: 'solid',
+    borderLeftColor: '#000',
+    borderTopColor: '#EAEAEA',
+    borderBottomColor: '#EAEAEA',
+    borderRightColor: '#EAEAEA',
+    borderWidth: 0.5
+  }
 });

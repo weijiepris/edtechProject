@@ -1,12 +1,6 @@
-import { Entypo } from "@expo/vector-icons";
-import React from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Entypo } from '@expo/vector-icons';
+import React from 'react';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export const Courses: React.FC = () => {
   return (
@@ -46,43 +40,43 @@ export const Courses: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF'
   },
   courseTabContainer: {
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     gap: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 15
   },
   courseTabs: {
-    backgroundColor: "#D9D9D9",
+    backgroundColor: '#D9D9D9',
     height: 71,
     width: 144,
-    borderRadius: 15,
+    borderRadius: 15
   },
   courseTitle: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 24,
     marginLeft: 11,
     marginTop: 4,
-    marginBottom: 4,
+    marginBottom: 4
   },
   courseSubTitle: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 11,
-    marginLeft: 11,
+    marginLeft: 11
   },
   coursesContainer: {
-    backgroundColor: "#EAEAEA",
+    backgroundColor: '#EAEAEA',
     height: 232,
     margin: 19,
-    borderRadius: 15,
+    borderRadius: 15
   },
   title: {
     marginLeft: 15,
     marginTop: 15,
     marginBottom: 9,
     fontSize: 16,
-    fontWeight: "bold",
-  },
+    fontWeight: 'bold'
+  }
 });

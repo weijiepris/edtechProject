@@ -1,6 +1,6 @@
-import { useExpoRouter } from "expo-router/build/global-state/router-store";
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useExpoRouter } from 'expo-router/build/global-state/router-store';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const Message = () => {
   const router = useExpoRouter();
@@ -8,7 +8,7 @@ const Message = () => {
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        router.push("/message");
+        router.push('/message');
       }}
     >
       <View style={styles.profileIcon}></View>
@@ -26,30 +26,30 @@ export default Message;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     height: 100,
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     padding: 30,
-    gap: 20,
+    gap: 20
   },
   profileIcon: {
     height: 48,
     width: 48,
-    backgroundColor: "#E1E1E1",
-    borderRadius: 100,
+    backgroundColor: '#E1E1E1',
+    borderRadius: 100
   },
   name: {
-    fontWeight: "bold",
+    fontWeight: 'bold'
   },
   message: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     gap: 10,
-    width: 250,
+    width: 250
   },
   text: {
     maxWidth: 200,
-    color: "gray",
-  },
+    color: 'gray'
+  }
 });

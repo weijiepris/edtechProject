@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { BASE_URL, IUser } from "../utils/constants";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { BASE_URL, IUser } from '../utils/constants';
 
 interface AccountState {
   user: IUser | null;
@@ -12,24 +12,24 @@ const useAccount = () => {
   const [{ user, loading, error }, setState] = useState<AccountState>({
     user: null,
     loading: true,
-    error: undefined,
+    error: undefined
   });
 
   const fetchAccount = async () => {
-    setState((prev) => ({ ...prev, loading: true }));
+    setState(prev => ({ ...prev, loading: true }));
 
     try {
       const response = await axios.get(`${BASE_URL}/auth/account`);
       setState({
         user: response.data,
         loading: false,
-        error: undefined,
+        error: undefined
       });
     } catch (error: any) {
       setState({
         user: null,
         loading: false,
-        error: error?.response?.data?.message || "Failed to load user data",
+        error: error?.response?.data?.message || 'Failed to load user data'
       });
     }
   };
@@ -42,7 +42,7 @@ const useAccount = () => {
     user,
     loading,
     error,
-    refresh: fetchAccount,
+    refresh: fetchAccount
   };
 };
 

@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import InputText from "../components/InputText";
-import { EvilIcons, Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import InputText from '../components/InputText';
+import { EvilIcons, Feather, FontAwesome, Ionicons } from '@expo/vector-icons';
 
 const SendMessage = () => {
   return (
@@ -25,19 +25,19 @@ export default SendMessage;
 const styles = StyleSheet.create({
   container: {
     marginTop: 6,
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     height: 300,
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     paddingHorizontal: 30,
-    paddingTop: 50,
+    paddingTop: 50
   },
   textbox: { height: 100, width: 300 },
   icons: {
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     gap: 10,
     marginTop: 30,
-    marginLeft: 10,
-  },
+    marginLeft: 10
+  }
 });
