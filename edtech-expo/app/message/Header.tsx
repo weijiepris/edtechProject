@@ -6,10 +6,9 @@ import { RouterStore } from "expo-router/build/global-state/router-store";
 
 interface IHeader {
   router: RouterStore;
-  onSearch: (value: string) => void;
 }
 
-const Header: React.FC<IHeader> = ({ router, onSearch }) => {
+const Header: React.FC<IHeader> = ({ router }) => {
   const [search, setSearch] = useState<string>("");
 
   return (
@@ -25,14 +24,6 @@ const Header: React.FC<IHeader> = ({ router, onSearch }) => {
         showIcon={true}
         value={search}
         onChangeText={setSearch}
-        renderIcon={() => (
-          <Feather
-            name="search"
-            size={20}
-            color="#000"
-            onPress={() => onSearch(search)}
-          />
-        )}
         style={styles.searchInput}
       />
     </View>

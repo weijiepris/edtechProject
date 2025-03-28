@@ -1,6 +1,6 @@
 import { useExpoRouter } from "expo-router/build/global-state/router-store";
-import React, { useState } from "react";
-import { Text, View } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import Header from "./Header";
 import Messages from "./Messages";
 

@@ -9,8 +9,8 @@ const App = () => {
   const { loading, isAuthenticated, validateToken } = useAuth();
 
   if (loading) return <View></View>;
-  if (isAuthenticated) return <Dashboard />;
-  // if (isAuthenticated) return <Chat />;
+  // if (isAuthenticated) return <Dashboard />;
+  if (isAuthenticated) return <Chat />;
   return <Login validateToken={validateToken} />;
 };
 

@@ -8,8 +8,8 @@ import {
 } from "react-native";
 
 interface InputProps extends TextInputProps {
-  errorMessage: string;
-  hasError: boolean;
+  errorMessage?: string;
+  hasError?: boolean;
   hideErrorMessage?: boolean;
   showIcon?: boolean;
   style?: any;

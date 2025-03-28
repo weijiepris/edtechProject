@@ -11,18 +11,10 @@ export default function Layout() {
           headerShown: false, // default: hide headers for all
         }}
       >
-        <Stack.Screen
-          name="chat"
-          options={{ title: "Chat", headerShown: true }}
-        />
-        <Stack.Screen
-          name="dashboard"
-          options={{ title: "Dashboard", headerShown: false }}
-        />
-        <Stack.Screen
-          name="login"
-          options={{ title: "Login", headerShown: false }}
-        />
+        <Stack.Screen name="chat" />
+        <Stack.Screen name="message" />
+        <Stack.Screen name="dashboard" />
+        <Stack.Screen name="login" />
       </Stack>
     </AuthProvider>
   );
