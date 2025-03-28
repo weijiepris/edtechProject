@@ -1,0 +1,4 @@
+echo "Running prettier"
+npx prettier --write .
+
+echo "Prettier done"
