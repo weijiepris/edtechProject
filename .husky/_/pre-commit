@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname "$0")/h"
 
+
+echo "✨ Running Prettier on the entire codebase..."
 npx lint-staged
+echo "✅ Prettier formatting complete!"
+
+
