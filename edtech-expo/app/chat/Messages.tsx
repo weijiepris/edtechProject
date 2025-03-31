@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Message from './Message';
 
 const Messages = () => {
+  console.log("re rendering")
   return (
     <View style={styles.container}>
       <View style={styles.messageContainer}>

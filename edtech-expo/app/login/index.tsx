@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   form: {
     paddingHorizontal: 30,
     borderRadius: 16,
+    gap: 16,
   },
   title: {
     fontSize: 24,

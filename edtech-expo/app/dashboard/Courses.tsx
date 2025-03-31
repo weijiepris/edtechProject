@@ -6,10 +6,9 @@ export const Courses: React.FC = () => {
   return (
     <View style={styles.coursesContainer}>
       <Text style={styles.title}>Courses</Text>
-      {/* Courses tab section*/}
       <ScrollView
         horizontal
-        showsHorizontalScrollIndicator={false} // Hide scrollbar
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.courseTabContainer}
       >
         <TouchableOpacity style={styles.courseTabs}>

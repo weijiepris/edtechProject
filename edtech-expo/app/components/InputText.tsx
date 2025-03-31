@@ -22,7 +22,7 @@ const InputText: React.FC<InputProps> = ({
   ...props
 }) => {
   return (
-    <View style={styles.container}>
+    <View>
       <View style={[styles.textboxWrapper, hasError && styles.inputError, style]}>
         <TextInput
           {...props}
@@ -44,9 +44,6 @@ const InputText: React.FC<InputProps> = ({
 export default InputText;
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
   textboxWrapper: {
     flexDirection: 'row',
     alignItems: 'center',

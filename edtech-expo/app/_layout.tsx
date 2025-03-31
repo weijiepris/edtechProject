@@ -8,7 +8,7 @@ export default function Layout() {
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <Stack
         screenOptions={{
-          headerShown: false, // default: hide headers for all
+          headerShown: false,
         }}
       >
         <Stack.Screen name="chat" />
@@ -16,6 +16,10 @@ export default function Layout() {
         <Stack.Screen name="dashboard" />
         <Stack.Screen name="login" />
         <Stack.Screen name="profile" />
+        <Stack.Screen name="grades" />
+        <Stack.Screen name="assignment" />
+        <Stack.Screen name="leaderboard" />
+        <Stack.Screen name="notification" />
       </Stack>
     </AuthProvider>
   );

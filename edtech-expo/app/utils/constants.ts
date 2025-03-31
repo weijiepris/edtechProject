@@ -31,3 +31,14 @@ export const RoleDisplayMapping = new Map<UserRoles, string>([
   [UserRoles.TEACHER, 'LECTURER'],
   [UserRoles.STUDENT, 'STUDENT'],
 ]);
+
+export enum OnlineStatus {
+  ONLINE = 'online',
+  OFFLINE = 'offline',
+  IDLE = 'idle',
+}
+
+export const OnlineStatusMapping = new Map<OnlineStatus, string>([
+  [OnlineStatus.ONLINE, 'Online'],
+  [OnlineStatus.OFFLINE, 'Offline'],
+]);
