@@ -15,6 +15,7 @@ export default function Layout() {
         <Stack.Screen name="message" />
         <Stack.Screen name="dashboard" />
         <Stack.Screen name="login" />
+        <Stack.Screen name="register" />
         <Stack.Screen name="profile" />
         <Stack.Screen name="grades" />
         <Stack.Screen name="assignment" />

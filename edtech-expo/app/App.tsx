@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useAuth } from './hooks/useAuth';
 import Dashboard from './dashboard';
@@ -11,14 +11,23 @@ import Leaderboard from './leaderboard';
 import Notification from './notification';
 import Messages from './chat/Messages';
 import Message from './message';
+import Register from './register';
+import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 
 const App = () => {
-  const { loading, isAuthenticated, validateToken } = useAuth();
+  const router = useExpoRouter();
+  const { loading, isAuthenticated } = useAuth();
 
-  if (loading) return <View></View>;
-  if (isAuthenticated) return <Dashboard />;
-  if (isAuthenticated) return <Chat />;
-  return <Login validateToken={validateToken} />;
+  console.log({ isAuthenticated });
+  useEffect(() => {
+    if (!loading) {
+      if (isAuthenticated) {
+        router.push('/dashboard');
+      } else {
+        router.push('/login');
+      }
+    }
+  }, [isAuthenticated, loading]);
 };
 
 export default App;

@@ -49,6 +49,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (!token) throw new Error('No token found');
 
       const response = await axios.get(`${BASE_URL}/auth/`);
+
+      console.log({ response });
       setState({
         isAuthenticated: true,
         loading: false,

@@ -1,8 +1,16 @@
 import React from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import InputText from '../components/InputText';
+import { handleLogout } from '../services/Logout.service';
+import { useAuth } from '../hooks/useAuth';
 
 const ProfileContent = () => {
+  const { loading, isAuthenticated, validateToken } = useAuth();
+
+  console.log({ isAuthenticated });
+  const onLogout = () => {
+    handleLogout(validateToken);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -22,6 +30,9 @@ const ProfileContent = () => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.changePasswordButton}>
           <Text style={styles.buttonText}>Change password</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.changePasswordButton} onPress={onLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>
     </View>

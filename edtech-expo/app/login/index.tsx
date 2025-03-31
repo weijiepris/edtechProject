@@ -5,27 +5,21 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import image from '../../assets/images/login-screen.png';
 import InputText from '@/app/components/InputText';
 import { handleLogin } from '@/app/services/Login.service';
+import { useAuth } from '../hooks/useAuth';
+import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 
-interface ILogin {
-  validateToken: Function;
-}
+interface ILogin {}
 
-const Login: React.FC<ILogin> = ({ validateToken }) => {
-  const [email, setEmail] = useState('test@here.com');
+const Login: React.FC<ILogin> = ({}) => {
+  const { validateToken } = useAuth();
+  const router = useExpoRouter();
+
+  const [email, setEmail] = useState('');
   const [hasEmailError, setHasEmailError] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
-  const [password, setPassword] = useState('password');
+  const [password, setPassword] = useState('');
   const [hasPasswordError, setHasPasswordError] = useState<boolean>(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>('');
-
-  const onEmailChange = (value: string) => {
-    setEmail(value);
-    resetFields();
-  };
-  const onPasswordChange = (value: string) => {
-    setPassword(value);
-    resetFields();
-  };
 
   const resetFields = () => {
     setHasEmailError(false);
@@ -54,7 +48,10 @@ const Login: React.FC<ILogin> = ({ validateToken }) => {
           errorMessage={emailErrorMessage}
           hasError={hasEmailError}
           hideErrorMessage={true}
-          onChangeText={onEmailChange}
+          onChangeText={val => {
+            setEmail(val);
+            resetFields();
+          }}
         />
         <InputText
           placeholder="Password"
@@ -62,7 +59,10 @@ const Login: React.FC<ILogin> = ({ validateToken }) => {
           value={password}
           errorMessage={passwordErrorMessage}
           hasError={hasPasswordError}
-          onChangeText={onPasswordChange}
+          onChangeText={val => {
+            setPassword(val);
+            resetFields();
+          }}
         />
         <TouchableOpacity
           style={styles.button}
@@ -72,6 +72,9 @@ const Login: React.FC<ILogin> = ({ validateToken }) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.forgetPassword}>
           <Text style={styles.forgetPasswordText}>Forget password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.register} onPress={() => router.replace('/register')}>
+          <Text style={styles.forgetPasswordText}>Register for an account</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -121,5 +124,8 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  register: {
+    alignItems: 'center',
   },
 });
