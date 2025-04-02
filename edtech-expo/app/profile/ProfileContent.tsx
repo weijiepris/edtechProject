@@ -1,36 +1,65 @@
-import React from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import InputText from '../components/InputText';
-import { handleLogout } from '../services/Logout.service';
+import { handleLogout } from '../services/Auth.service';
 import { useAuth } from '../hooks/useAuth';
+import { IUser } from '../utils/constants';
+import { updateProfile } from '../services/User.service';
 
-const ProfileContent = () => {
-  const { loading, isAuthenticated, validateToken } = useAuth();
+interface IProfile {
+  profile?: IUser;
+}
 
-  console.log({ isAuthenticated });
+const ProfileContent: React.FC<IProfile> = ({ profile }) => {
+  const { isAuthenticated, validateToken } = useAuth();
+
+  const [firstName, setFirstName] = useState<string>(profile?.firstName ?? '');
+  const [lastName, setLastName] = useState<string>(profile?.lastName ?? '');
+  const [age, setAge] = useState<number | string>(profile?.age ?? '');
+  const [email, setEmail] = useState<string>(profile?.email ?? '');
+
+  useEffect(() => {
+    if (profile) {
+      setFirstName(profile.firstName || '');
+      setLastName(profile.lastName || '');
+      setEmail(profile.email || '');
+      setAge(profile.age || '');
+    }
+  }, [profile]);
+
   const onLogout = () => {
     handleLogout(validateToken);
   };
+
+  const onUpdateProfile = () => {
+    updateProfile({ age: Number(age), email, firstName, lastName });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <Text style={styles.title}>Edit profile</Text>
+
         <Text>First name</Text>
-        <InputText style={styles.input} />
+        <InputText style={styles.input} value={firstName} onChangeText={setFirstName} />
+
         <Text>Last name</Text>
-        <InputText style={styles.input} />
-        <Text>Username</Text>
-        <InputText style={styles.input} />
+        <InputText style={styles.input} value={lastName} onChangeText={setLastName} />
+
+        <Text>Age</Text>
+        <InputText style={styles.input} value={String(age)} onChangeText={setAge} />
+
         <Text>Email</Text>
-        <InputText style={styles.input} />
-        <Text>Phone number</Text>
-        <InputText style={styles.input} />
-        <TouchableOpacity style={styles.saveButton}>
+        <InputText style={styles.input} value={email} onChangeText={setEmail} />
+
+        <TouchableOpacity style={styles.saveButton} onPress={onUpdateProfile}>
           <Text style={styles.buttonText}>Save changes</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.changePasswordButton}>
           <Text style={styles.buttonText}>Change password</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.changePasswordButton} onPress={onLogout}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>

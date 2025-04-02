@@ -4,7 +4,7 @@ import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import image from '../../assets/images/login-screen.png';
 import InputText from '@/app/components/InputText';
-import { handleRegister } from '../services/Register.service';
+import { handleRegister } from '../services/Auth.service';
 import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 import { useAuth } from '../hooks/useAuth';
 
