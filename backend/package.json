@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node -r dotenv/config ./dist/index.js",
     "dev": "rm -rf ./dist && tsc-watch --onSuccess 'node -r dotenv/config ./dist/index.js'",
-    "build": "tsc"
+    "build": "tsc",
+    "db:seed": "npx ts-node src/seed.ts",
+    "db:reset": "npx ts-node src/resetDb.ts",
+    "db:start": "npm run db:reset && npm run db:seed"
   },
   "author": "",
   "license": "ISC",

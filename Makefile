@@ -6,7 +6,11 @@ app:
 
 dev:
 	@cd backend && npm run dev
-
+	
+dev-reset:
+	@cd backend && npm run db:start
+	@cd backend && npm run dev
+	
 start:
 	@docker compose up -d
 	@echo 'postgres@${POSTGRES_VERSION} container started'

@@ -1,6 +1,7 @@
-import { Entity, Column, OneToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, CreateDateColumn, ManyToOne } from 'typeorm';
 import { Submission } from './Submission.entity';
 import { BaseEntity } from './BaseEntity.entity';
+import { Teacher } from './Teacher.entity';
 
 @Entity()
 export class Feedback extends BaseEntity {
@@ -10,10 +11,9 @@ export class Feedback extends BaseEntity {
   @Column({ nullable: true })
   rating?: number;
 
-  @OneToOne(() => Submission, submission => submission.feedback, { onDelete: 'CASCADE' })
-  @JoinColumn()
-  submission: Submission;
+  @ManyToOne(() => Teacher, teacher => teacher.feedbacks, { onDelete: 'SET NULL', nullable: true })
+  teacher: Teacher;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @ManyToOne(() => Submission, submission => submission.feedbacks, { eager: true })
+  submission: Submission;
 }

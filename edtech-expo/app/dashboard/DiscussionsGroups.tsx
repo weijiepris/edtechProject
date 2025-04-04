@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-export const Discussions: React.FC = () => {
+const Discussions: React.FC = () => {
   return (
     <View style={styles.discussionsGroupContainer}>
       <View style={styles.discussionsContainer}></View>
@@ -9,6 +9,8 @@ export const Discussions: React.FC = () => {
     </View>
   );
 };
+
+export default Discussions;
 
 const styles = StyleSheet.create({
   discussionsGroupContainer: {

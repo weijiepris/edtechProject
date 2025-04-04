@@ -1,9 +1,9 @@
-import axios from 'axios';
+import api from '../config/axios';
 import { BASE_URL } from '../utils/constants';
 
 export const getProfile = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/user/profile`);
+    const response = await api.get(`${BASE_URL}/user/profile`);
     return response.data;
   } catch (error: any) {
     console.error('Error fetching profile:', error?.response?.data || error.message);
@@ -29,7 +29,7 @@ export const updateProfile = async ({
       firstName,
       lastName,
     });
-    const response = await axios.patch(`${BASE_URL}/user/profile`, {
+    const response = await api.patch(`${BASE_URL}/user/profile`, {
       age,
       email,
       firstName,

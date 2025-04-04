@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import authRouter from '../services/auth';
-import userRouter from '../services/user';
+import classRouter from './student';
+import authRouter from './auth';
+import userRouter from './user';
 import { requestLogger } from '../middleware/requestLogger';
 
 export const useRoutes = (app: Router): void => {
@@ -8,4 +9,5 @@ export const useRoutes = (app: Router): void => {
 
   app.use('/auth', authRouter);
   app.use('/user', userRouter);
+  app.use('/student', classRouter);
 };

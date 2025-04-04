@@ -8,12 +8,10 @@ import {
 } from 'typeorm';
 import { Student } from './Student.entity';
 import { Class } from './Class.entity';
+import { BaseEntity } from './BaseEntity.entity';
 
 @Entity()
-export class StudentClass {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class StudentClass extends BaseEntity {
   @ManyToOne(() => Student, student => student.studentClasses, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'studentId' })
   student: Student;

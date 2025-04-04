@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export const Badges: React.FC = () => {
+const Badges: React.FC = () => {
   const router = useRouter();
 
   const goTo = (page: string) => {
@@ -27,6 +27,7 @@ export const Badges: React.FC = () => {
     </View>
   );
 };
+export default Badges;
 
 const styles = StyleSheet.create({
   iconTitleContainer: {

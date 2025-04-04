@@ -4,11 +4,13 @@ import ProfileContent from './ProfileContent';
 import Header from '../components/Header';
 import { getProfile } from '../services/User.service';
 import { IUser } from '../utils/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
   const [profile, setProfile] = useState<IUser | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
+  console.log('token', AsyncStorage.getItem('token'));
   useEffect(() => {
     const fetchProfile = async () => {
       try {

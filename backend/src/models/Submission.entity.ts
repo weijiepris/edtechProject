@@ -1,4 +1,12 @@
-import { Entity, Column, ManyToOne, OneToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  OneToOne,
+  JoinColumn,
+  CreateDateColumn,
+  OneToMany
+} from 'typeorm';
 import { Assignment } from './Assignment.entity';
 import { Student } from './Student.entity';
 import { BaseEntity } from './BaseEntity.entity';
@@ -18,8 +26,8 @@ export class Submission extends BaseEntity {
   @ManyToOne(() => Student, student => student.submissions, { onDelete: 'CASCADE' })
   student: Student;
 
-  @OneToOne(() => Feedback, feedback => feedback.submission, { cascade: true })
-  feedback?: Feedback;
+  @OneToMany(() => Feedback, feedback => feedback.submission)
+  feedbacks: Feedback[];
 
   @CreateDateColumn()
   submittedAt: Date;

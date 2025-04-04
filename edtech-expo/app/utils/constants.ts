@@ -11,7 +11,6 @@ export enum UserRoles {
 }
 
 export interface IUser extends IBaseEntity {
-  uuid: number;
   firstName: string;
   lastName: string;
   age: number;
@@ -19,7 +18,37 @@ export interface IUser extends IBaseEntity {
   role: UserRoles;
 }
 
+export interface IStudent extends IBaseEntity {
+  user: IUser;
+  grade?: string;
+  school?: string;
+  parent?: IParent;
+  isActive: boolean;
+  friends: IStudent[];
+  submissions: ISubmission[];
+}
+
+export interface IParent extends IBaseEntity {}
+
+export interface ISubmission extends IBaseEntity {}
+
+export interface IClass extends IBaseEntity {
+  name: string;
+  courseCode: string;
+  courseType: string;
+  term: string;
+  teacher: string;
+}
+
+export interface IStudentClass extends IBaseEntity {
+  student: IStudent;
+  class: IClass;
+  status: string;
+  enrolledAt: Date;
+}
+
 export interface IBaseEntity {
+  uuid: string;
   createdAt: Date;
   updatedAt: Date;
 }

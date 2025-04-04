@@ -5,12 +5,15 @@ import { handleLogout } from '../services/Auth.service';
 import { useAuth } from '../hooks/useAuth';
 import { IUser } from '../utils/constants';
 import { updateProfile } from '../services/User.service';
+import Toast from 'react-native-toast-message';
+import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 
 interface IProfile {
   profile?: IUser;
 }
 
 const ProfileContent: React.FC<IProfile> = ({ profile }) => {
+  const router = useExpoRouter();
   const { isAuthenticated, validateToken } = useAuth();
 
   const [firstName, setFirstName] = useState<string>(profile?.firstName ?? '');
@@ -32,7 +35,14 @@ const ProfileContent: React.FC<IProfile> = ({ profile }) => {
   };
 
   const onUpdateProfile = () => {
-    updateProfile({ age: Number(age), email, firstName, lastName });
+    updateProfile({ age: Number(age), email, firstName, lastName }).then(() => {
+      Toast.show({
+        type: 'success',
+        text1: 'Profile updated!',
+        position: 'top',
+      });
+      router.replace('/dashboard');
+    });
   };
 
   return (

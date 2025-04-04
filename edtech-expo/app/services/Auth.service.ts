@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
-import { useAxios } from '../config/axios';
 import { RouterStore } from 'expo-router/build/global-state/router-store';
+import api from '../config/axios';
+
 export const handleLogin = async ({
   email,
   password,
@@ -14,12 +14,9 @@ export const handleLogin = async ({
   validateToken: Function;
   fn: Function;
 }) => {
-  const api = await useAxios();
-
-  console.log(BASE_URL);
-  await axios
+  api
     .post(`${BASE_URL}/auth/login`, { email, password })
-    .then(async response => {
+    .then(async (response: any) => {
       console.log('success', response);
 
       const { token } = response.data;
@@ -28,7 +25,7 @@ export const handleLogin = async ({
         validateToken(true);
       });
     })
-    .catch(err => {
+    .catch((err: any) => {
       fn(err.response.data.message);
       console.log(`${err.response.data.message}`);
     });
@@ -37,13 +34,13 @@ export const handleLogin = async ({
 export const handleLogout = async (validateToken: Function) => {
   try {
     await AsyncStorage.removeItem('token');
-    await axios
+    api
       .post(`${BASE_URL}/auth/logout`)
-      .then(async response => {
+      .then(async (response: any) => {
         console.log('success', response);
         validateToken();
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.log(`${err.response.data.message}`);
       });
   } catch (err: any) {
@@ -71,7 +68,7 @@ export const handleRegister = async ({
   router: RouterStore;
 }) => {
   try {
-    const response = await axios.post(`${BASE_URL}/auth/register`, {
+    const response = api.post(`${BASE_URL}/auth/register`, {
       firstName,
       lastName,
       age,

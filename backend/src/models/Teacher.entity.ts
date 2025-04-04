@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany } from 
 import { User } from './User.entity';
 import { Class } from './Class.entity';
 import { BaseEntity } from './BaseEntity.entity';
+import { Feedback } from './Feedback.entity';
 
 @Entity()
 export class Teacher extends BaseEntity {
@@ -11,4 +12,7 @@ export class Teacher extends BaseEntity {
 
   @OneToMany(() => Class, classEntity => classEntity.teacher)
   classesTaught: Class[];
+
+  @OneToMany(() => Feedback, feedback => feedback.teacher)
+  feedbacks: Feedback[];
 }

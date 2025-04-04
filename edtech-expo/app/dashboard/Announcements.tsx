@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export const Announcements: React.FC = () => {
+const Announcements: React.FC = () => {
   return (
     <View style={styles.announcementsContainer}>
       <Text style={styles.title}>Announcements</Text>
@@ -22,3 +22,5 @@ const styles = StyleSheet.create({
     height: 300,
   },
 });
+
+export default Announcements;

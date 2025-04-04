@@ -9,6 +9,15 @@ export class Class extends BaseEntity {
   name: string;
 
   @Column()
+  courseCode: string;
+
+  @Column()
+  courseType: string;
+
+  @Column()
+  term: string;
+
+  @Column()
   teacher: string;
 
   @OneToMany(() => StudentClass, studentClass => studentClass.class)

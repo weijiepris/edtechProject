@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
+import api from '../config/axios';
 
 interface User {
   id: string;
@@ -46,11 +46,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
 
       const token = await AsyncStorage.getItem('token');
-      if (!token) throw new Error('No token found');
+      console.log('token from auth ', { token });
+      if (!token) {
+        setState({
+          isAuthenticated: false,
+          loading: false,
+          error: undefined,
+        });
+        return;
+      }
 
-      const response = await axios.get(`${BASE_URL}/auth/`);
+      const response = await api.get(`${BASE_URL}/auth`);
 
-      console.log({ response });
       setState({
         isAuthenticated: true,
         loading: false,

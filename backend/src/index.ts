@@ -5,7 +5,8 @@ import { useRoutes } from './services';
 import { applyMiddleware } from './middleware';
 
 const run = async () => {
-  db.initialize()
+  db()
+    .initialize()
     .then(async () => {
       console.info('Database connection initialised');
     })

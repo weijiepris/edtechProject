@@ -1,8 +1,26 @@
 import { Entypo } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { IClass, IStudentClass } from '../utils/constants';
+import { fetchStudentClasses } from '../services/Class.service';
+import Toast from 'react-native-toast-message';
 
-export const Courses: React.FC = () => {
+interface ICourses {}
+
+const Courses: React.FC<ICourses> = ({}) => {
+  const [classes, setClasses] = useState<IStudentClass[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchStudentClasses()
+      .then(data => {
+        setClasses(Array.isArray(data) ? data : []);
+      })
+      .catch(err => console.error('Failed to fetch classes:', err))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <View style={styles.coursesContainer}>
       <Text style={styles.title}>Courses</Text>
@@ -11,32 +29,21 @@ export const Courses: React.FC = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.courseTabContainer}
       >
-        <TouchableOpacity style={styles.courseTabs}>
-          <Text style={styles.courseTitle}>
-            CS6460
-            <Entypo name="chevron-right" size={24} color="black" />
-          </Text>
-          <Text style={styles.courseSubTitle}>Educational Technology</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.courseTabs}>
-          <Text style={styles.courseTitle}>
-            CS6460
-            <Entypo name="chevron-right" size={24} color="black" />
-          </Text>
-          <Text style={styles.courseSubTitle}>Educational Technology</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.courseTabs}>
-          <Text style={styles.courseTitle}>
-            CS6460
-            <Entypo name="chevron-right" size={24} color="black" />
-          </Text>
-          <Text style={styles.courseSubTitle}>Educational Technology</Text>
-        </TouchableOpacity>
+        {classes.map(cls => (
+          <TouchableOpacity style={styles.courseTabs} key={cls.uuid}>
+            <Text style={styles.courseTitle}>
+              {`${cls.class.courseType} ${cls.class.courseCode}`}
+              <Entypo name="chevron-right" size={24} color="black" />
+            </Text>
+            <Text style={styles.courseSubTitle}>{cls.class.name}</Text>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
     </View>
   );
 };
 
+export default Courses;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFF',

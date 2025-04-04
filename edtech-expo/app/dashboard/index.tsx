@@ -1,26 +1,25 @@
 import useAccount from '@/app/hooks/useAccount';
 import { useAuth } from '@/app/hooks/useAuth';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Courses } from './Courses';
-import { Badges } from './BadgesChats';
-import { Discussions } from './DiscussionsGroups';
-import { Announcements } from './Announcements';
+import Courses from './Courses';
+import Badges from './BadgesChats';
+import Discussions from './DiscussionsGroups';
+import Announcements from './Announcements';
 import Header from '../components/Header';
 import { Feather, Fontisto } from '@expo/vector-icons';
 import { useExpoRouter } from 'expo-router/build/global-state/router-store';
-import { RoleDisplayMapping, UserRoles } from '../utils/constants';
+import { IClass, RoleDisplayMapping, UserRoles } from '../utils/constants';
+import { fetchStudentClasses } from '../services/Class.service';
 
 const Dashboard = () => {
   const router = useExpoRouter();
   const { user, loading: userLoading } = useAccount();
   const { loading: authLoading, validateToken } = useAuth();
-  console.log('[dashboard]', user);
 
   if (!userLoading && !user) {
     validateToken();
   }
-
   return (
     <View style={styles.container}>
       <Header
