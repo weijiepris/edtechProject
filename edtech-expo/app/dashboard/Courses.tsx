@@ -19,7 +19,6 @@ const Courses: React.FC<ICourses> = ({}) => {
       .then(data => {
         setClasses(Array.isArray(data) ? data : []);
       })
-      .catch(err => console.error('Failed to fetch classes:', err))
       .finally(() => setLoading(false));
   }, []);
 

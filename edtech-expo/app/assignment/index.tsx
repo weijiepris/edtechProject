@@ -49,6 +49,11 @@ const Assignment = () => {
   return (
     <View style={styles.container}>
       <Header showBackButton={true} renderMiddleSection={'Assignments'} />
+      {assignments.length === 0 && (
+        <View>
+          <Text>You currently do not have any assignments</Text>
+        </View>
+      )}
       <FlatList
         data={assignments}
         keyExtractor={item => item.id.toString()}
