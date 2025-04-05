@@ -1,37 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { Entypo, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import Header from '../components/Header';
-
-const assignments = [
-  {
-    id: 1,
-    title: 'Assignment 1',
-    subject: 'Math',
-    dueDate: '10 Jan',
-    status: 'Submitted',
-  },
-  {
-    id: 2,
-    title: 'Assignment 2',
-    subject: 'Math',
-    dueDate: '5 Feb',
-    daysLeft: 1,
-  },
-  {
-    id: 3,
-    title: 'Assignment 3',
-    subject: 'Math',
-    dueDate: '10 Feb',
-    daysLeft: 4,
-  },
-];
+import { fetchAssignmentsByClass } from '../services/Class.service';
+import { useLocalSearchParams } from 'expo-router';
+import { format, differenceInDays } from 'date-fns';
 
 const Assignment = () => {
+  const { courseUuid } = useLocalSearchParams<{ courseUuid: string }>();
+  const [assignments, setAssignments] = useState<
+    {
+      id: any;
+      title: any;
+      subject: any;
+      dueDate: string;
+      daysLeft: number;
+      status: undefined;
+    }[]
+  >([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetchAssignmentsByClass(courseUuid);
+        const processed = res.map((item: any) => {
+          const dueDate = new Date(item.dueDate);
+          return {
+            id: item.uuid,
+            title: item.title,
+            subject: item.class?.name ?? 'Unknown Subject',
+            dueDate: format(dueDate, 'dd MMM'),
+            daysLeft: differenceInDays(dueDate, new Date()),
+            status: undefined,
+          };
+        });
+        setAssignments(processed);
+      } catch (err) {
+        console.error('Failed to fetch assignments:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [courseUuid]);
+
   return (
     <View style={styles.container}>
       <Header showBackButton={true} renderMiddleSection={'Assignments'} />
-
       <FlatList
         data={assignments}
         keyExtractor={item => item.id.toString()}
@@ -56,10 +73,10 @@ const Assignment = () => {
                 <Text
                   style={[
                     styles.dueLabel,
-                    item.daysLeft && item.daysLeft <= 1 ? styles.dueUrgent : styles.dueWarning,
+                    item.daysLeft <= 1 ? styles.dueUrgent : styles.dueWarning,
                   ]}
                 >
-                  {item.daysLeft} day{item.daysLeft && item.daysLeft > 1 ? 's' : ''} left
+                  {item.daysLeft} day{item.daysLeft > 1 ? 's' : ''} left
                 </Text>
               )}
 

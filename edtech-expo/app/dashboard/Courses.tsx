@@ -32,7 +32,6 @@ const Courses: React.FC<ICourses> = ({}) => {
     courseCode: string;
     courseName: string;
   }) => {
-    console.log(courseUuid, courseName, courseCode);
     router.push({
       pathname: '/courseDetail',
       params: {
@@ -57,7 +56,7 @@ const Courses: React.FC<ICourses> = ({}) => {
             key={cls.uuid}
             onPress={() =>
               onCourseTab({
-                courseUuid: cls.uuid,
+                courseUuid: cls.class.uuid,
                 courseCode: `${cls.class.courseType} ${cls.class.courseCode}`,
                 courseName: `${cls.class.name}`,
               })

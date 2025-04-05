@@ -32,6 +32,15 @@ export interface IParent extends IBaseEntity {}
 
 export interface ISubmission extends IBaseEntity {}
 
+export interface IAssignment extends IBaseEntity {
+  title: string;
+  description: string;
+  dueDate: Date;
+  status: string;
+  class: IClass;
+  submissions: ISubmission[];
+}
+
 export interface IClass extends IBaseEntity {
   name: string;
   courseCode: string;

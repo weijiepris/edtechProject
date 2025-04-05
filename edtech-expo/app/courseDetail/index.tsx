@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Entypo } from '@expo/vector-icons';
 import Header from '../components/Header';
+import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 
 const CourseDetails = () => {
   const { courseUuid, courseName, courseCode } = useLocalSearchParams<{
@@ -10,7 +11,16 @@ const CourseDetails = () => {
     courseName: string;
     courseCode: string;
   }>();
-  const router = useRouter();
+  const router = useExpoRouter();
+
+  const handleOnPress = (pathName: string) => {
+    router.push({
+      pathname: '/assignment',
+      params: {
+        courseUuid,
+      },
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -25,7 +35,7 @@ const CourseDetails = () => {
       />
 
       <ScrollView style={styles.sectionList}>
-        <TouchableOpacity style={styles.card} onPress={() => router.push('/assignment')}>
+        <TouchableOpacity style={styles.card} onPress={() => handleOnPress('/assignment')}>
           <Text style={styles.cardText}>📚 View Assignments</Text>
         </TouchableOpacity>
 

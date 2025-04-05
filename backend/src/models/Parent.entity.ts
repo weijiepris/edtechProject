@@ -9,7 +9,6 @@ export class Parent extends BaseEntity {
   @JoinColumn()
   user: User;
 
-  // One parent can have multiple students
   @OneToMany(() => Student, student => student.parent)
   children: Student[];
 }

@@ -1,7 +1,5 @@
-// src/services/student/student.controller.ts
-
 import { Request, Response } from 'express';
-import { StudentClass } from '../../models/StudentClass.entity';
+import { StudentClass, Assignment } from '../../models';
 import { Student } from '../../models/Student.entity';
 
 export const getClasses = async (req: Request, res: Response) => {
@@ -37,6 +35,32 @@ export const getClasses = async (req: Request, res: Response) => {
     return;
   } catch (err) {
     console.error('Error fetching student classes:', err);
+    res.status(500).json({ message: 'Internal server error' });
+    return;
+  }
+};
+
+export const getAssignmentsByClass = async (req: Request, res: Response) => {
+  const { courseUuid } = req.params;
+
+  try {
+    // const classEntity = await Class.findOne({
+    //   where: { uuid: courseUuid }
+    // });
+
+    // if (!classEntity) {
+    //   return res.status(404).json({ message: 'Class not found' });
+    // }
+
+    const assignments = await Assignment.find({
+      where: { class: { uuid: courseUuid } },
+      relations: ['class']
+    });
+
+    res.json(assignments);
+    return;
+  } catch (error) {
+    console.error('Error fetching assignments by class:', error);
     res.status(500).json({ message: 'Internal server error' });
     return;
   }
