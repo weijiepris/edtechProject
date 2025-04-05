@@ -4,10 +4,12 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import { IClass, IStudentClass } from '../utils/constants';
 import { fetchStudentClasses } from '../services/Class.service';
 import Toast from 'react-native-toast-message';
+import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 
 interface ICourses {}
 
 const Courses: React.FC<ICourses> = ({}) => {
+  const router = useExpoRouter();
   const [classes, setClasses] = useState<IStudentClass[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -21,6 +23,26 @@ const Courses: React.FC<ICourses> = ({}) => {
       .finally(() => setLoading(false));
   }, []);
 
+  const onCourseTab = ({
+    courseUuid,
+    courseName,
+    courseCode,
+  }: {
+    courseUuid: string;
+    courseCode: string;
+    courseName: string;
+  }) => {
+    console.log(courseUuid, courseName, courseCode);
+    router.push({
+      pathname: '/courseDetail',
+      params: {
+        courseUuid,
+        courseCode,
+        courseName,
+      },
+    });
+  };
+
   return (
     <View style={styles.coursesContainer}>
       <Text style={styles.title}>Courses</Text>
@@ -30,7 +52,17 @@ const Courses: React.FC<ICourses> = ({}) => {
         contentContainerStyle={styles.courseTabContainer}
       >
         {classes.map(cls => (
-          <TouchableOpacity style={styles.courseTabs} key={cls.uuid}>
+          <TouchableOpacity
+            style={styles.courseTabs}
+            key={cls.uuid}
+            onPress={() =>
+              onCourseTab({
+                courseUuid: cls.uuid,
+                courseCode: `${cls.class.courseType} ${cls.class.courseCode}`,
+                courseName: `${cls.class.name}`,
+              })
+            }
+          >
             <Text style={styles.courseTitle}>
               {`${cls.class.courseType} ${cls.class.courseCode}`}
               <Entypo name="chevron-right" size={24} color="black" />

@@ -16,6 +16,7 @@ export default function Layout() {
         >
           <Stack.Screen name="dashboard/index" />
           <Stack.Screen name="chat/index" />
+          <Stack.Screen name="courseDetail/index" />
           <Stack.Screen name="message/index" />
           <Stack.Screen name="login/index" />
           <Stack.Screen name="register/index" />
