@@ -20,7 +20,12 @@ const Message: React.FC<IMessage> = ({ chatDetails }) => {
         });
       }}
     >
-      <View style={styles.profileIcon}></View>
+      <View style={styles.avatar}>
+        <Text style={styles.avatarText}>
+          {chatDetails.withUser?.firstName[0]}
+          {chatDetails.withUser?.lastName[0]}
+        </Text>
+      </View>
       <View style={styles.message}>
         <Text
           style={styles.name}
@@ -62,5 +67,17 @@ const styles = StyleSheet.create({
   text: {
     maxWidth: 200,
     color: 'gray',
+  },
+  avatar: {
+    height: 40,
+    width: 40,
+    backgroundColor: '#E1E1E1',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  avatarText: {
+    fontWeight: 'bold',
   },
 });

@@ -4,12 +4,14 @@ export $(shell sed 's/=.*//' .env)
 app: 
 	@cd edtech-expo && npm start
 
+app-select: 
+	@cd edtech-expo && npx expo run:android --device
+
 dev:
 	@cd backend && npm run dev
 	
 dev-reset:
 	@cd backend && npm run db:start
-	@cd backend && npm run dev
 	
 start:
 	@docker compose up -d

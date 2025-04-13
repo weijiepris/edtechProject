@@ -3,7 +3,7 @@ import express from './expressModule';
 import db from './config/db';
 import { useRoutes } from './services';
 import { applyMiddleware } from './middleware';
-import setupSocket from './config/socket';
+import setupSocket from './socket';
 
 const run = async () => {
   db()

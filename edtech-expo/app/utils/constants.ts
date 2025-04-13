@@ -22,6 +22,11 @@ export interface IChatMessage {
 
 export interface IChatPreview {
   chatId: string;
+  currentUser: {
+    uuid: string;
+    firstName: string;
+    lastName: string;
+  };
   withUser: {
     uuid: string;
     firstName: string;

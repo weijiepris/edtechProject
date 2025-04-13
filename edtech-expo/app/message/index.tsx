@@ -52,13 +52,36 @@ const Message = () => {
   }, [socket, chatId]);
 
   useEffect(() => {
-    if (!socket || !chatId) return;
+    if (!socket || !chat) return;
 
-    socket.emit('get_online_status', { userId: chat?.withUser.uuid });
+    // Initial status fetch
+    socket.emit('get_online_status');
 
-    socket.on('online_status', ({ userId, isOnline }) => {
-      setOnlineStatus(isOnline ? OnlineStatus.ONLINE : OnlineStatus.OFFLINE);
-    });
+    const handleOnlineStatus = ({ onlineUsers }: { onlineUsers: { [k: string]: string } }) => {
+      setOnlineStatus(onlineUsers[chat.withUser.uuid] ? OnlineStatus.ONLINE : OnlineStatus.OFFLINE);
+    };
+
+    const handleUserOnline = ({ userId }: { userId: string }) => {
+      if (userId === chat.withUser.uuid) {
+        setOnlineStatus(OnlineStatus.ONLINE);
+      }
+    };
+
+    const handleUserOffline = ({ userId }: { userId: string }) => {
+      if (userId === chat.withUser.uuid) {
+        setOnlineStatus(OnlineStatus.OFFLINE);
+      }
+    };
+
+    socket.on('online_status', handleOnlineStatus);
+    socket.on('user_online', handleUserOnline);
+    socket.on('user_offline', handleUserOffline);
+
+    return () => {
+      socket.off('online_status', handleOnlineStatus);
+      socket.off('user_online', handleUserOnline);
+      socket.off('user_offline', handleUserOffline);
+    };
   }, [socket, chat]);
 
   const getOnlineStatusStyling = (value: OnlineStatus) => {
@@ -89,7 +112,7 @@ const Message = () => {
         )}
       />
       <MessageContent messages={messages} />
-      <SendMessage />
+      <SendMessage socket={socket} chatId={chatId} />
     </View>
   );
 };

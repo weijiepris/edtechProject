@@ -214,6 +214,41 @@ const loadSeed = async (): Promise<void> => {
   chat.lastMessage = message3;
   await chat.save();
 
+  // Create a chat between student and teacher
+  const teacherChat = Chat.create({
+    userA: studentUser,
+    userB: teacherUser
+  });
+  await teacherChat.save();
+
+  // Create chat messages for student-teacher conversation
+  const teacherMessage1 = ChatMessage.create({
+    chat: teacherChat,
+    content: 'Hi Ms. Smith, I had a question about the assignment.',
+    sender: studentUser,
+    receiverId: teacherUser.uuid
+  });
+  await teacherMessage1.save();
+
+  const teacherMessage2 = ChatMessage.create({
+    chat: teacherChat,
+    content: 'Sure, what do you need help with?',
+    sender: teacherUser,
+    receiverId: studentUser.uuid
+  });
+  await teacherMessage2.save();
+
+  const teacherMessage3 = ChatMessage.create({
+    chat: teacherChat,
+    content: 'I wasn’t sure how to solve question 4.',
+    sender: studentUser,
+    receiverId: teacherUser.uuid
+  });
+  await teacherMessage3.save();
+
+  teacherChat.lastMessage = teacherMessage3;
+  await teacherChat.save();
+
   console.log('Demo data loaded');
   process.exit(0);
 };
