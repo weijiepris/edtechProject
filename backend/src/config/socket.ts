@@ -4,6 +4,8 @@ import http from 'http';
 import jwt from 'jsonwebtoken';
 import { User, Chat, ChatMessage } from '../models';
 
+const onlineUsers = new Map<string, string>(); // userId -> socket.id
+
 const setupSocket = (server: http.Server) => {
   const io = new Server(server, {
     cors: {
@@ -27,6 +29,7 @@ const setupSocket = (server: http.Server) => {
 
   io.on('connection', socket => {
     const userId: string = socket.data.userId;
+    onlineUsers.set(userId, socket.id);
 
     // Fetch chats this user is involved in
     socket.on('get_chats', async () => {
@@ -114,6 +117,15 @@ const setupSocket = (server: http.Server) => {
         console.error('Failed to fetch messages:', err);
         socket.emit('chat_messages', []); // fallback empty
       }
+    });
+    socket.on('disconnect', () => {
+      onlineUsers.delete(userId);
+      io.emit('user_offline', { userId });
+    });
+
+    socket.on('get_online_status', ({ userId: targetId }) => {
+      const isOnline = onlineUsers.has(targetId);
+      socket.emit('online_status', { userId: targetId, isOnline });
     });
   });
 

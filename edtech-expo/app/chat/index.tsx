@@ -16,7 +16,6 @@ export default function ChatScreen() {
   };
 
   useEffect(() => {
-    console.log('trying to connect to socket');
     const init = async () => {
       const connectedSocket = await connectSocket();
       setSocket(connectedSocket);

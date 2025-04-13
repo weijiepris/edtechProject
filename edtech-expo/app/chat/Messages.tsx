@@ -17,7 +17,6 @@ const Messages: React.FC<MessagesProps> = ({ socket }) => {
     socket.emit('get_chats');
 
     socket.on('chats_list', (data: IChatPreview[]) => {
-      console.log('from socket, fetched chats', data);
       setChats(data);
     });
 

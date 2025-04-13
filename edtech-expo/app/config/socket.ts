@@ -16,11 +16,11 @@ export const connectSocket = async () => {
   });
 
   socket.on('connect', () => {
-    console.log('WebSocket connected');
+    // console.log('WebSocket connected');
   });
 
   socket.on('disconnect', () => {
-    console.log('WebSocket disconnected');
+    // console.log('WebSocket disconnected');
   });
 
   socket.on('receive_message', message => {

@@ -13,6 +13,7 @@ const Message = () => {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [chat, setChat] = useState<IChatPreview>();
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [onlineStatus, setOnlineStatus] = useState<OnlineStatus>(OnlineStatus.OFFLINE);
 
   useEffect(() => {
     const init = async () => {
@@ -30,7 +31,6 @@ const Message = () => {
 
   useEffect(() => {
     if (!socket || !chatId) return;
-    console.log({ chatId });
 
     socket.emit('get_messages', { chatId });
 
@@ -50,6 +50,16 @@ const Message = () => {
       socket.off('receive_message');
     };
   }, [socket, chatId]);
+
+  useEffect(() => {
+    if (!socket || !chatId) return;
+
+    socket.emit('get_online_status', { userId: chat?.withUser.uuid });
+
+    socket.on('online_status', ({ userId, isOnline }) => {
+      setOnlineStatus(isOnline ? OnlineStatus.ONLINE : OnlineStatus.OFFLINE);
+    });
+  }, [socket, chat]);
 
   const getOnlineStatusStyling = (value: OnlineStatus) => {
     switch (value) {
@@ -71,8 +81,8 @@ const Message = () => {
               <Text
                 style={styles.text}
               >{`${chat?.withUser.firstName} ${chat?.withUser.lastName}`}</Text>
-              <Text style={[styles.text, getOnlineStatusStyling(OnlineStatus.ONLINE)]}>
-                {OnlineStatusMapping.get(OnlineStatus.ONLINE)}
+              <Text style={[styles.text, getOnlineStatusStyling(onlineStatus)]}>
+                {OnlineStatusMapping.get(onlineStatus)}
               </Text>
             </View>
           </View>

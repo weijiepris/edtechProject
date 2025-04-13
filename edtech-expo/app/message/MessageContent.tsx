@@ -39,17 +39,25 @@ const MessageContent: React.FC<MessageContentProps> = ({ messages }) => {
   };
 
   return (
-    <FlatList
-      data={messages}
-      renderItem={renderItem}
-      keyExtractor={item => item.uuid}
-      contentContainerStyle={styles.list}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={messages}
+        renderItem={renderItem}
+        keyExtractor={item => item.uuid}
+        contentContainerStyle={styles.list}
+      />
+    </View>
   );
 };
 
 export default MessageContent;
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 6,
+    display: 'flex',
+    height: 500,
+    backgroundColor: '#FFF',
+  },
   list: {
     padding: 12,
   },
