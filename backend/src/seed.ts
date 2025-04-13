@@ -8,6 +8,8 @@ import { StudentClass } from './models/StudentClass.entity';
 import { Submission } from './models/Submission.entity';
 import { UserRoles } from './utils/constants';
 import { Feedback } from 'models';
+import { Chat, ChatMessage } from './models';
+
 import db from './config/db';
 
 const run = async () => {
@@ -177,6 +179,40 @@ const loadSeed = async (): Promise<void> => {
   // //   grade: 10
   // // });
   // // await feedback.save();
+
+  const chat = Chat.create({
+    userA: studentUser,
+    userB: studentUser2
+  });
+  await chat.save();
+
+  // Create chat messages
+  const message1 = ChatMessage.create({
+    chat: chat,
+    content: 'Hey, have you done the Algebra homework?',
+    sender: studentUser,
+    receiverId: studentUser2.uuid
+  });
+  await message1.save();
+
+  const message2 = ChatMessage.create({
+    chat: chat,
+    content: 'Yeah! Finished it last night, it was tough!',
+    sender: studentUser2,
+    receiverId: studentUser.uuid
+  });
+  await message2.save();
+
+  const message3 = ChatMessage.create({
+    chat: chat,
+    content: 'Same here 😵, took me 3 hours!',
+    sender: studentUser,
+    receiverId: studentUser2.uuid
+  });
+  await message3.save();
+
+  chat.lastMessage = message3;
+  await chat.save();
 
   console.log('Demo data loaded');
   process.exit(0);

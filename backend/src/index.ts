@@ -3,6 +3,7 @@ import express from './expressModule';
 import db from './config/db';
 import { useRoutes } from './services';
 import { applyMiddleware } from './middleware';
+import setupSocket from './config/socket';
 
 const run = async () => {
   db()
@@ -24,6 +25,8 @@ const run = async () => {
   useRoutes(app);
 
   const server = createServer(app);
+
+  setupSocket(server);
 
   const PORT = parseInt(process.env.PORT || '8000');
   server.listen(PORT, '0.0.0.0', () => {

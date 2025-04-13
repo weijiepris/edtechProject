@@ -1,21 +1,32 @@
 import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { IChatPreview } from '../utils/constants';
 
-const Message = () => {
+interface IMessage {
+  chatDetails: IChatPreview;
+}
+const Message: React.FC<IMessage> = ({ chatDetails }) => {
   const router = useExpoRouter();
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        router.push('/message');
+        router.push({
+          pathname: '/message',
+          params: {
+            chatId: chatDetails.chatId,
+          },
+        });
       }}
     >
       <View style={styles.profileIcon}></View>
       <View style={styles.message}>
-        <Text style={styles.name}>Jovia Cheng</Text>
+        <Text
+          style={styles.name}
+        >{`${chatDetails.withUser?.firstName} ${chatDetails.withUser?.lastName}`}</Text>
         <Text numberOfLines={1} style={styles.text}>
-          Let's meet up to discuss! adsfasdf asdf asdf asdf
+          {chatDetails.lastMessage?.content}
         </Text>
       </View>
     </TouchableOpacity>

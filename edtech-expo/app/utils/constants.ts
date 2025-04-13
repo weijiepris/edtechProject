@@ -10,6 +10,29 @@ export enum UserRoles {
   USER = 'user',
 }
 
+export interface IChatMessage {
+  uuid: string;
+  content: string;
+  senderId: string;
+  receiverId: string;
+  sender: IUser;
+  chatId: string;
+  createdAt: string;
+}
+
+export interface IChatPreview {
+  chatId: string;
+  withUser: {
+    uuid: string;
+    firstName: string;
+    lastName: string;
+  };
+  lastMessage: {
+    content: string;
+    createdAt: string;
+  } | null;
+}
+
 export interface IUser extends IBaseEntity {
   firstName: string;
   lastName: string;

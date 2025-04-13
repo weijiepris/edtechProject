@@ -7,3 +7,5 @@ export { Assignment } from './Assignment.entity';
 export { Feedback } from './Feedback.entity';
 export { Submission } from './Submission.entity';
 export { Class } from './Class.entity';
+export { ChatMessage } from './ChatMessage.entity';
+export { Chat } from './Chat.entity';

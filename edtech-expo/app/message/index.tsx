@@ -1,11 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MessageContent from './MessageContent';
 import SendMessage from './SendMessage';
 import Header from '../components/Header';
-import { OnlineStatus, OnlineStatusMapping } from '../utils/constants';
+import { IChatMessage, IChatPreview, OnlineStatus, OnlineStatusMapping } from '../utils/constants';
+import { useLocalSearchParams } from 'expo-router';
+import { connectSocket, disconnectSocket } from '../config/socket';
+import { Socket } from 'socket.io-client';
 
 const Message = () => {
+  const { chatId } = useLocalSearchParams<{ chatId: string }>();
+  const [messages, setMessages] = useState<IChatMessage[]>([]);
+  const [chat, setChat] = useState<IChatPreview>();
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+  useEffect(() => {
+    const init = async () => {
+      const connectedSocket = await connectSocket();
+      setSocket(connectedSocket);
+    };
+
+    init();
+
+    return () => {
+      disconnectSocket();
+      setSocket(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!socket || !chatId) return;
+    console.log({ chatId });
+
+    socket.emit('get_messages', { chatId });
+
+    socket.on('chat_messages', (data: { messages: IChatMessage[]; chat: IChatPreview }) => {
+      setChat(data.chat);
+      setMessages(data.messages);
+    });
+
+    socket.on('receive_message', (newMessage: IChatMessage) => {
+      if (newMessage.chatId === chatId) {
+        setMessages(prev => [...prev, newMessage]);
+      }
+    });
+
+    return () => {
+      socket.off('chat_messages');
+      socket.off('receive_message');
+    };
+  }, [socket, chatId]);
+
   const getOnlineStatusStyling = (value: OnlineStatus) => {
     switch (value) {
       case OnlineStatus.ONLINE:
@@ -14,6 +59,7 @@ const Message = () => {
         return { color: '#4D4D4D' };
     }
   };
+
   return (
     <View style={styles.container}>
       <Header
@@ -22,7 +68,9 @@ const Message = () => {
           <View style={styles.userDetailsContainer}>
             <View style={styles.profileIcon}></View>
             <View style={styles.userDetails}>
-              <Text style={styles.text}>Jovia Cheng</Text>
+              <Text
+                style={styles.text}
+              >{`${chat?.withUser.firstName} ${chat?.withUser.lastName}`}</Text>
               <Text style={[styles.text, getOnlineStatusStyling(OnlineStatus.ONLINE)]}>
                 {OnlineStatusMapping.get(OnlineStatus.ONLINE)}
               </Text>
@@ -30,7 +78,7 @@ const Message = () => {
           </View>
         )}
       />
-      <MessageContent />
+      <MessageContent messages={messages} />
       <SendMessage />
     </View>
   );
