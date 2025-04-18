@@ -1,4 +1,4 @@
-import { Entity, Column, OneToOne, JoinColumn, CreateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm';
 import { Submission } from './Submission.entity';
 import { BaseEntity } from './BaseEntity.entity';
 import { Teacher } from './Teacher.entity';
@@ -6,14 +6,20 @@ import { Teacher } from './Teacher.entity';
 @Entity()
 export class Feedback extends BaseEntity {
   @Column('text')
-  content: string;
+  comment: string;
 
-  @Column({ nullable: true })
-  rating?: number;
+  @Column({ type: 'int', nullable: true })
+  grade?: number;
 
-  @ManyToOne(() => Teacher, teacher => teacher.feedbacks, { onDelete: 'SET NULL', nullable: true })
+  @ManyToOne(() => Teacher, teacher => teacher.feedbacks, {
+    onDelete: 'SET NULL',
+    nullable: true
+  })
   teacher: Teacher;
 
-  @ManyToOne(() => Submission, submission => submission.feedbacks, { eager: true })
+  @OneToOne(() => Submission, submission => submission.feedback, {
+    onDelete: 'CASCADE',
+    nullable: false
+  })
   submission: Submission;
 }

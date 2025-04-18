@@ -41,7 +41,11 @@ const Header: React.FC<HeaderPropsFirstVariation | HeaderPropsSecondVariation> =
       <View style={styles.middleSection}>
         {typeof renderMiddleSection === 'string' ? (
           <>
-            <Text style={styles.headerText}>{renderMiddleSection}</Text>
+            <Text
+              style={renderMiddleSection.length < 25 ? styles.headerText : styles.headerTextSmall}
+            >
+              {renderMiddleSection}
+            </Text>
           </>
         ) : (
           renderMiddleSection()
@@ -72,6 +76,10 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 30,
+    fontWeight: 'bold',
+  },
+  headerTextSmall: {
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

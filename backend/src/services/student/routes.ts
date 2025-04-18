@@ -44,17 +44,15 @@ export const getAssignmentsByClass = async (req: Request, res: Response) => {
   const { courseUuid } = req.params;
 
   try {
-    // const classEntity = await Class.findOne({
-    //   where: { uuid: courseUuid }
-    // });
-
-    // if (!classEntity) {
-    //   return res.status(404).json({ message: 'Class not found' });
-    // }
-
     const assignments = await Assignment.find({
       where: { class: { uuid: courseUuid } },
-      relations: ['class']
+      relations: {
+        class: {
+          assignments: {
+            submissions: true
+          }
+        }
+      }
     });
 
     res.json(assignments);

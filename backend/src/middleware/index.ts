@@ -10,7 +10,7 @@ export const applyMiddleware = (app: Router): void => {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+        secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
         maxAge: 10 * 60 * 60 * 1000 // 10 hours
       }

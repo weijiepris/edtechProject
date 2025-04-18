@@ -35,7 +35,7 @@ export class Student extends BaseEntity {
 
   @ManyToMany(() => Student, student => student.friends)
   @JoinTable({
-    name: 'student_friends', // Define the junction table name
+    name: 'student_friends',
     joinColumn: {
       name: 'studentId',
       referencedColumnName: 'uuid'

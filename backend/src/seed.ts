@@ -6,8 +6,7 @@ import { Class } from './models/Class.entity';
 import { Assignment } from './models/Assignment.entity';
 import { StudentClass } from './models/StudentClass.entity';
 import { Submission } from './models/Submission.entity';
-import { UserRoles } from './utils/constants';
-import { Feedback } from 'models';
+import { AssignmentStatus, UserRoles } from './utils/constants';
 import { Chat, ChatMessage } from './models';
 
 import db from './config/db';
@@ -34,7 +33,6 @@ run().catch(error => {
 });
 
 const loadSeed = async (): Promise<void> => {
-  // base user
   const user = User.create({
     firstName: 'test',
     lastName: 'here',
@@ -45,7 +43,6 @@ const loadSeed = async (): Promise<void> => {
   });
 
   await user.save();
-  // Create a parent user
 
   const parentUser = User.create({
     firstName: 'Jane',
@@ -60,7 +57,6 @@ const loadSeed = async (): Promise<void> => {
   const parent = Parent.create({ user: parentUser });
   await parent.save();
 
-  // Create a student user
   const studentUser = User.create({
     firstName: 'John',
     lastName: 'Doe',
@@ -70,7 +66,6 @@ const loadSeed = async (): Promise<void> => {
     role: UserRoles.STUDENT
   });
   await studentUser.save();
-  // Create a student user
   const studentUser2 = User.create({
     firstName: 'John',
     lastName: 'Dumma',
@@ -100,7 +95,6 @@ const loadSeed = async (): Promise<void> => {
   });
   await student2.save();
 
-  // Create a teacher user
   const teacherUser = User.create({
     firstName: 'Emily',
     lastName: 'Smith',
@@ -114,7 +108,6 @@ const loadSeed = async (): Promise<void> => {
   const teacher = Teacher.create({ user: teacherUser });
   await teacher.save();
 
-  // Create a class
   const classEntity = Class.create({
     name: 'Educational Technology',
     teacher: teacherUser.uuid,
@@ -133,7 +126,6 @@ const loadSeed = async (): Promise<void> => {
   });
   await classEntity2.save();
 
-  // Enroll student in class
   const studentClass = StudentClass.create({
     student: student,
     class: classEntity,
@@ -154,39 +146,12 @@ const loadSeed = async (): Promise<void> => {
   });
   await studentClass3.save();
 
-  // Create an assignment
-  const assignment = Assignment.create({
-    class: classEntity,
-    title: 'Algebra Homework',
-    description: 'Complete all questions from chapter 5',
-    dueDate: new Date()
-  });
-  await assignment.save();
-
-  // Create a submission
-  const submission = Submission.create({
-    student: student,
-    assignment: assignment,
-    content: 'Answers to the assignment'
-  });
-  await submission.save();
-
-  // // // Create feedback
-  // // const feedback = Feedback.create({
-  // //   submission: submission,
-  // //   teacher: teacher,
-  // //   comment: 'Well done!',
-  // //   grade: 10
-  // // });
-  // // await feedback.save();
-
   const chat = Chat.create({
     userA: studentUser,
     userB: studentUser2
   });
   await chat.save();
 
-  // Create chat messages
   const message1 = ChatMessage.create({
     chat: chat,
     content: 'Hey, have you done the Algebra homework?',
@@ -214,14 +179,12 @@ const loadSeed = async (): Promise<void> => {
   chat.lastMessage = message3;
   await chat.save();
 
-  // Create a chat between student and teacher
   const teacherChat = Chat.create({
     userA: studentUser,
     userB: teacherUser
   });
   await teacherChat.save();
 
-  // Create chat messages for student-teacher conversation
   const teacherMessage1 = ChatMessage.create({
     chat: teacherChat,
     content: 'Hi Ms. Smith, I had a question about the assignment.',
@@ -248,6 +211,67 @@ const loadSeed = async (): Promise<void> => {
 
   teacherChat.lastMessage = teacherMessage3;
   await teacherChat.save();
+
+  const assignment = Assignment.create({
+    class: classEntity,
+    title: 'Algebra Homework',
+    description: 'Complete all questions from chapter 5',
+    dueDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
+  });
+  await assignment.save();
+
+  const submission = Submission.create({
+    student: student,
+    assignment: assignment,
+    content: 'Answers to the assignment',
+    submittedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
+    grade: '10/10',
+    status: AssignmentStatus.SUBMITTED
+  });
+  await submission.save();
+
+  const assignment1 = Assignment.create({
+    title: 'Assignment 1 - Algebra Homework',
+    description: 'Complete all questions from chapter 5 of Algebra workbook.',
+    dueDate: new Date('2025-04-28'),
+    class: classEntity
+  });
+  await assignment1.save();
+
+  const assignment2 = Assignment.create({
+    title: 'Assignment 2 - Trigonometry Worksheet',
+    description: 'Solve all trigonometry problems in worksheet B.',
+    dueDate: new Date('2025-05-15'),
+    class: classEntity
+  });
+  await assignment2.save();
+
+  const assignment3 = Assignment.create({
+    title: 'Assignment 3 - Geometry Challenge',
+    description: 'Participate in group geometry problem-solving challenge.',
+    dueDate: new Date('2025-06-05'),
+    class: classEntity
+  });
+  await assignment3.save();
+
+  const submission1 = Submission.create({
+    content: 'Answers to chapter 5. Please see attached file.',
+    grade: '9/10',
+    assignment: assignment1,
+    student: student,
+    submittedAt: new Date('2025-04-29'),
+    status: AssignmentStatus.SUBMITTED_LATE
+  });
+  await submission1.save();
+
+  const submission2 = Submission.create({
+    content: 'submitted',
+    assignment: assignment2,
+    student: student,
+    submittedAt: new Date('2025-04-29'),
+    status: AssignmentStatus.SUBMITTED
+  });
+  await submission2.save();
 
   console.log('Demo data loaded');
   process.exit(0);

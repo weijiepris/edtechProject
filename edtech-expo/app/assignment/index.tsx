@@ -5,8 +5,11 @@ import Header from '../components/Header';
 import { fetchAssignmentsByClass } from '../services/Class.service';
 import { useLocalSearchParams } from 'expo-router';
 import { format, differenceInDays } from 'date-fns';
+import { useExpoRouter } from 'expo-router/build/global-state/router-store';
+import { AssignmentStatus } from '../utils/constants';
 
 const Assignment = () => {
+  const router = useExpoRouter();
   const { courseUuid } = useLocalSearchParams<{ courseUuid: string }>();
   const [assignments, setAssignments] = useState<
     {
@@ -15,7 +18,7 @@ const Assignment = () => {
       subject: any;
       dueDate: string;
       daysLeft: number;
-      status: undefined;
+      status: AssignmentStatus;
     }[]
   >([]);
   const [loading, setLoading] = useState(true);
@@ -24,15 +27,18 @@ const Assignment = () => {
     const fetchData = async () => {
       try {
         const res = await fetchAssignmentsByClass(courseUuid);
-        const processed = res.map((item: any) => {
+        const processed = res.map(item => {
           const dueDate = new Date(item.dueDate);
+          const status =
+            item.class.assignments.find(assignment => assignment.uuid === item.uuid)?.submissions[0]
+              ?.status ?? AssignmentStatus.ACTIVE;
           return {
             id: item.uuid,
             title: item.title,
             subject: item.class?.name ?? 'Unknown Subject',
             dueDate: format(dueDate, 'dd MMM'),
             daysLeft: differenceInDays(dueDate, new Date()),
-            status: undefined,
+            status,
           };
         });
         setAssignments(processed);
@@ -69,12 +75,19 @@ const Assignment = () => {
             </View>
 
             <View style={styles.bottomRow}>
-              {item.status === 'Submitted' ? (
+              {item.status === AssignmentStatus.SUBMITTED && (
                 <View style={styles.statusRow}>
                   <Feather name="check-circle" size={16} color="#666" />
                   <Text style={styles.statusText}>Submitted</Text>
                 </View>
-              ) : (
+              )}
+              {item.status === AssignmentStatus.SUBMITTED_LATE && (
+                <View style={styles.statusRow}>
+                  <Feather name="check-circle" size={16} color="#666" />
+                  <Text style={styles.statusText}>Late submission</Text>
+                </View>
+              )}
+              {item.status === AssignmentStatus.ACTIVE && (
                 <Text
                   style={[
                     styles.dueLabel,
@@ -85,8 +98,8 @@ const Assignment = () => {
                 </Text>
               )}
 
-              <TouchableOpacity>
-                <Text style={styles.readMore}>Read more</Text>
+              <TouchableOpacity onPress={() => router.push(`/assignment/${item.id}`)}>
+                <Text style={styles.readMore}>View more</Text>
               </TouchableOpacity>
             </View>
           </View>

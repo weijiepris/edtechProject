@@ -1,79 +1,112 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { fetchAssignmentGrades } from '../services/Assignment.service';
+import { useLocalSearchParams } from 'expo-router';
+import { AssignmentStatus, IAssignment, IClass } from '../utils/constants';
+import { format } from 'date-fns';
 
 const GradesContent = () => {
-  const courses = [
-    { code: 'CS6460', name: 'Educational technology' },
-    { code: 'CS6230', name: 'Machine learning for trading' },
-    { code: 'CS4243', name: 'Cognitive science' },
-  ];
-  const [selectedCourse, setSelectedCourse] = useState(courses[0]);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { courseUuid } = useLocalSearchParams<{ courseUuid: string }>();
+  const [classObj, setClassObj] = useState<IClass>();
+  const [displayAssignment, setDisplayAssignment] = useState<IAssignment[]>();
+
+  useEffect(() => {
+    if (!courseUuid) return;
+
+    const fetchGrades = async () => {
+      try {
+        const res = await fetchAssignmentGrades(courseUuid);
+        setClassObj(res);
+        setDisplayAssignment(res.assignments);
+      } catch (error) {
+        Alert.alert('Error', 'Unable to fetch grades details');
+      }
+    };
+
+    fetchGrades();
+  }, [courseUuid]);
+
+  const convertStatus = (status: AssignmentStatus) => {
+    switch (status) {
+      case AssignmentStatus.ACTIVE:
+        return 'Not submitted yet';
+      case AssignmentStatus.SUBMITTED:
+        return 'Submitted';
+      case AssignmentStatus.SUBMITTED_LATE:
+        return 'Late submission';
+      default:
+        break;
+    }
+  };
+
+  const filterAssignments = (filterBy: string) => {
+    switch (filterBy) {
+      case 'graded':
+        const gradedAssignments = classObj?.assignments?.filter(assignment =>
+          assignment.submissions.some(submission => submission.grade && submission.grade !== '-'),
+        );
+        setDisplayAssignment(gradedAssignments);
+        break;
+      case 'ungraded':
+        const ungradedAssignments = classObj?.assignments?.filter(assignment =>
+          assignment.submissions.some(submission => submission.grade && submission.grade === '-'),
+        );
+        setDisplayAssignment(ungradedAssignments);
+        break;
+      case 'all':
+      default:
+        setDisplayAssignment(classObj?.assignments);
+        break;
+    }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.dropdownWrapper}>
-        <TouchableOpacity
-          style={styles.courseDropdown}
-          onPress={() => setDropdownOpen(prev => !prev)}
-        >
-          <Text style={styles.dropdownText}>
-            {selectedCourse.code} {selectedCourse.name}
-          </Text>
-          <MaterialIcons name="arrow-drop-down" size={24} color="black" />
-        </TouchableOpacity>
-
-        {dropdownOpen && (
-          <View style={styles.dropdownList}>
-            {courses.map((course, idx) => (
-              <TouchableOpacity
-                key={idx}
-                style={styles.dropdownItem}
-                onPress={() => {
-                  setSelectedCourse(course);
-                  setDropdownOpen(false);
-                }}
-              >
-                <Text style={styles.dropdownItemText}>
-                  {course.code} {course.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
+        <Text style={styles.heading}>{classObj?.name}</Text>
       </View>
+
       <View style={styles.toggleContainer}>
-        <TouchableOpacity style={styles.toggleButton}>
+        <TouchableOpacity style={styles.toggleButton} onPress={() => filterAssignments('all')}>
           <Text style={styles.toggleText}>All</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.toggleButton}>
+        <TouchableOpacity style={styles.toggleButton} onPress={() => filterAssignments('graded')}>
           <Text style={styles.toggleText}>Graded</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.toggleButton}>
+        <TouchableOpacity style={styles.toggleButton} onPress={() => filterAssignments('ungraded')}>
           <Text style={styles.toggleText}>Ungraded</Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.content}>
         <View style={styles.tableHeader}>
           <Text style={styles.tableHeaderText}>Name</Text>
           <Text style={styles.tableHeaderText}>Due</Text>
+          <Text style={styles.tableHeaderText}>Submitted on</Text>
           <Text style={styles.tableHeaderText}>Status</Text>
           <Text style={styles.tableHeaderText}>Grade</Text>
         </View>
-        {[
-          { name: 'Assignment 1', due: '20 April 25', status: 'Graded', grade: '10/10' },
-          { name: 'Assignment 2', due: '20 Jun 25', status: 'Graded', grade: '7/10' },
-          { name: 'Assignment 3', due: '20 July 25', status: 'Graded', grade: '10/10' },
-          { name: 'Final exam', due: '20 Dec 25', status: 'Graded', grade: '70/100' },
-        ].map((row, index) => (
-          <View key={index} style={styles.tableRow}>
-            <Text style={styles.tableCell}>{row.name}</Text>
-            <Text style={styles.tableCell}>{row.due}</Text>
-            <Text style={styles.tableCell}>{row.status}</Text>
-            <Text style={styles.tableCell}>{row.grade}</Text>
-          </View>
-        ))}
+
+        {displayAssignment?.map((item, index) => {
+          console.log(item);
+          return (
+            <View key={index} style={styles.tableRow}>
+              <Text style={styles.tableCell}>{item.title}</Text>
+              <Text style={styles.tableCell}> {format(new Date(item.dueDate), 'dd/MM/yyyy')}</Text>
+              <Text style={styles.tableCell}>
+                {item.submissions.length > 0
+                  ? format(new Date(item.submissions[0].submittedAt), 'dd/MM/yyyy')
+                  : '-'}
+              </Text>
+              <Text style={styles.tableCell}>
+                {item.submissions.length > 0 ? convertStatus(item.submissions[0].status) : '-'}
+              </Text>
+              <Text style={styles.tableCell}>
+                {item.submissions.length > 0 ? item.submissions[0].grade : '-'}
+              </Text>
+            </View>
+          );
+        })}
       </View>
     </View>
   );
@@ -181,5 +214,9 @@ const styles = StyleSheet.create({
 
   tableCell: {
     flex: 1,
+    fontSize: 12,
+  },
+  heading: {
+    fontSize: 20,
   },
 });

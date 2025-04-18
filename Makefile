@@ -10,7 +10,7 @@ app-select:
 dev:
 	@cd backend && npm run dev
 	
-dev-reset:
+seed:
 	@cd backend && npm run db:start
 	
 start:

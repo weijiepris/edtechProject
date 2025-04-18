@@ -2,6 +2,7 @@ import { Entity, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColum
 import { Class } from './Class.entity';
 import { BaseEntity } from './BaseEntity.entity';
 import { Submission } from './Submission.entity';
+import { AssignmentStatus } from '../utils/constants';
 
 @Entity()
 export class Assignment extends BaseEntity {
@@ -14,18 +15,9 @@ export class Assignment extends BaseEntity {
   @Column({ type: 'timestamp' })
   dueDate: Date;
 
-  @Column({ default: 'active' })
-  status: string;
-
   @ManyToOne(() => Class, classEntity => classEntity.assignments, { onDelete: 'CASCADE' })
   class: Class;
 
   @OneToMany(() => Submission, submission => submission.assignment)
   submissions: Submission[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

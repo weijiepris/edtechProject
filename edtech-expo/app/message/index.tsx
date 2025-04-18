@@ -54,7 +54,6 @@ const Message = () => {
   useEffect(() => {
     if (!socket || !chat) return;
 
-    // Initial status fetch
     socket.emit('get_online_status');
 
     const handleOnlineStatus = ({ onlineUsers }: { onlineUsers: { [k: string]: string } }) => {

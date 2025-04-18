@@ -1,4 +1,3 @@
-// socket.ts
 import { Server } from 'socket.io';
 import http from 'http';
 import jwt from 'jsonwebtoken';
@@ -32,7 +31,6 @@ const setupSocket = (server: http.Server) => {
     onlineUsers.set(userId, socket.id);
     io.emit('user_online', { userId });
 
-    // Fetch chats this user is involved in
     socket.on('get_chats', async () => {
       try {
         await User.findOneOrFail({ where: { uuid: userId } });
@@ -95,8 +93,6 @@ const setupSocket = (server: http.Server) => {
           order: { createdAt: 'ASC' }
         });
 
-        // Return messages to the requesting socket only
-
         const currentUser = chat.userA.uuid === userId ? chat.userA : chat.userB;
         const otherUser = chat.userA.uuid === userId ? chat.userB : chat.userA;
         const lastMessage = chat.messages?.sort(
@@ -127,7 +123,7 @@ const setupSocket = (server: http.Server) => {
         });
       } catch (err) {
         console.error('Failed to fetch messages:', err);
-        socket.emit('chat_messages', []); // fallback empty
+        socket.emit('chat_messages', []);
       }
     });
     socket.on('disconnect', () => {
@@ -162,7 +158,6 @@ const setupSocket = (server: http.Server) => {
 
         await message.save();
 
-        // update chat's lastMessage
         chat.lastMessage = message;
         await chat.save();
 
@@ -181,7 +176,6 @@ const setupSocket = (server: http.Server) => {
           receiverId: receiver.uuid
         };
 
-        // emit to both sender and receiver if online
         socket.emit('receive_message', formattedMessage);
         const receiverSocketId = onlineUsers.get(receiver.uuid);
         if (receiverSocketId) {

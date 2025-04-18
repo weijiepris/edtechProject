@@ -10,6 +10,19 @@ export enum UserRoles {
   USER = 'user',
 }
 
+export enum AssignmentStatus {
+  ACTIVE = 'active',
+  SUBMITTED = 'submitted',
+  SUBMITTED_LATE = 'submitted-late',
+}
+
+interface IAssignmentResult {
+  title: string;
+  dueDate: string;
+  status: 'Graded' | 'Ungraded';
+  grade: string;
+}
+
 export interface IChatMessage {
   uuid: string;
   content: string;
@@ -58,13 +71,17 @@ export interface IStudent extends IBaseEntity {
 
 export interface IParent extends IBaseEntity {}
 
-export interface ISubmission extends IBaseEntity {}
+export interface ISubmission extends IBaseEntity {
+  content: string;
+  grade: string;
+  status: AssignmentStatus;
+  submittedAt: Date;
+}
 
 export interface IAssignment extends IBaseEntity {
   title: string;
   description: string;
   dueDate: Date;
-  status: string;
   class: IClass;
   submissions: ISubmission[];
 }
@@ -75,6 +92,8 @@ export interface IClass extends IBaseEntity {
   courseType: string;
   term: string;
   teacher: string;
+  studentClasses: IStudentClass[];
+  assignments: IAssignment[];
 }
 
 export interface IStudentClass extends IBaseEntity {
