@@ -21,14 +21,12 @@ const Assignment = () => {
       status: AssignmentStatus;
     }[]
   >([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetchAssignmentsByClass(courseUuid);
 
-        console.log(res);
         const processed = res.assignments.map(item => {
           const dueDate = new Date(item.dueDate);
           const status =
@@ -45,13 +43,17 @@ const Assignment = () => {
         setAssignments(processed);
       } catch (err) {
         console.error('Failed to fetch assignments:', err);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
   }, [courseUuid]);
+
+  const determineAssignmentTitle = (text: string) => {
+    if (text.length > 30) return styles.assignmentTitleSmaller;
+    if (text.length > 20) return styles.assignmentTitleSmall;
+    return styles.assignmentTitle;
+  };
 
   return (
     <View style={styles.container}>
@@ -69,7 +71,7 @@ const Assignment = () => {
           <View style={styles.card}>
             <View style={styles.topRow}>
               <View>
-                <Text style={styles.assignmentTitle}>{item.title}</Text>
+                <Text style={determineAssignmentTitle(item.title)}>{item.title}</Text>
                 <Text style={styles.assignmentSubject}>{item.subject}</Text>
               </View>
               <Text style={styles.dueDate}>{item.dueDate}</Text>
@@ -142,6 +144,14 @@ const styles = StyleSheet.create({
   assignmentTitle: {
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  assignmentTitleSmall: {
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  assignmentTitleSmaller: {
+    fontWeight: 'bold',
+    fontSize: 13,
   },
   assignmentSubject: {
     color: '#888',

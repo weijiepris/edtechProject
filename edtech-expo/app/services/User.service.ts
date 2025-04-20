@@ -23,12 +23,6 @@ export const updateProfile = async ({
   email?: string;
 }) => {
   try {
-    console.log({
-      age,
-      email,
-      firstName,
-      lastName,
-    });
     const response = await api.patch(`${BASE_URL}/user/profile`, {
       age,
       email,

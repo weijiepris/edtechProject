@@ -17,8 +17,6 @@ export const handleLogin = async ({
   api
     .post(`${BASE_URL}/auth/login`, { email, password })
     .then(async (response: any) => {
-      console.log('success', response);
-
       const { token } = response.data;
 
       await AsyncStorage.setItem('token', token).then(() => {
@@ -27,7 +25,6 @@ export const handleLogin = async ({
     })
     .catch((err: any) => {
       fn(err.response.data.message);
-      console.log(`${err.response.data.message}`);
     });
 };
 
@@ -37,12 +34,9 @@ export const handleLogout = async (validateToken: Function) => {
     api
       .post(`${BASE_URL}/auth/logout`)
       .then(async (response: any) => {
-        console.log('success', response);
         validateToken();
       })
-      .catch((err: any) => {
-        console.log(`${err.response.data.message}`);
-      });
+      .catch((err: any) => {});
   } catch (err: any) {
     console.error('Logout error:', err?.message || err);
   }
@@ -76,11 +70,9 @@ export const handleRegister = async ({
       password,
     });
 
-    console.log(response);
     router.replace('/login');
   } catch (err: any) {
     const message = err?.response?.data?.message || 'Registration failed';
-    console.log('Register error:', message);
     onError(message);
   }
 };

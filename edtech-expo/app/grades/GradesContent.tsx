@@ -88,7 +88,6 @@ const GradesContent = () => {
         </View>
 
         {displayAssignment?.map((item, index) => {
-          console.log(item);
           return (
             <View key={index} style={styles.tableRow}>
               <Text style={styles.tableCell}>{item.title}</Text>

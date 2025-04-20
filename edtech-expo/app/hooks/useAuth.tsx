@@ -46,7 +46,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
 
       const token = await AsyncStorage.getItem('token');
-      console.log('token from auth ', { token });
       if (!token) {
         setState({
           isAuthenticated: false,

@@ -10,12 +10,10 @@ const Profile = () => {
   const [profile, setProfile] = useState<IUser | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
-  console.log('token', AsyncStorage.getItem('token'));
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const data = await getProfile();
-        console.log(data);
         setProfile(data);
       } catch (err) {
         console.error('Failed to load profile');

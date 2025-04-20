@@ -13,7 +13,6 @@ const CourseDetails = () => {
   const router = useExpoRouter();
 
   const handleOnPress = (pathName: string) => {
-    console.log(pathName, courseUuid);
     router.push({
       pathname: pathName,
       params: {

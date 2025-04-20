@@ -4,11 +4,13 @@ import { useLocalSearchParams } from 'expo-router';
 import Header from '../components/Header';
 import { fetchAssignmentDetails, submitAssignment } from '../services/Assignment.service';
 import { IAssignment } from '../utils/constants';
+import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 
 const AssignmentDetails = () => {
   const { id: assignmentId } = useLocalSearchParams<{ id: string }>();
   const [assignment, setAssignment] = useState<IAssignment>();
   const [submissionText, setSubmissionText] = useState('');
+  const router = useExpoRouter();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -26,6 +28,7 @@ const AssignmentDetails = () => {
     try {
       await submitAssignment(assignmentId, submissionText);
       Alert.alert('Success', 'Assignment submitted successfully');
+      router.goBack();
     } catch (error: any) {
       const message =
         error?.response?.data?.message || error?.message || 'Failed to submit assignment';

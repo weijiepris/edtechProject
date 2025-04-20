@@ -1,19 +1,15 @@
-import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Socket } from 'socket.io-client';
 import Messages from './Messages';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
-import { BASE_URL } from '../utils/constants';
 import { connectSocket, disconnectSocket } from '../config/socket';
 
 export default function ChatScreen() {
   const [socket, setSocket] = useState<Socket | null>(null);
 
-  const onSearch = (value: string) => {
-    console.log('searching', value);
-  };
+  const onSearch = (value: string) => {};
 
   useEffect(() => {
     const init = async () => {
