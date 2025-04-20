@@ -64,7 +64,6 @@ export const getAssignmentsByClass = async (req: Request, res: Response) => {
       .andWhere('student.uuid = :studentUuid', { studentUuid: student.uuid })
       .getOne();
 
-    classEntity?.assignments.forEach(ass => console.log(ass.submissions));
     res.json(classEntity);
     return;
   } catch (error) {

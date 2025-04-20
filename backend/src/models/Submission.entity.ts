@@ -1,12 +1,4 @@
-import {
-  Entity,
-  Column,
-  ManyToOne,
-  OneToOne,
-  JoinColumn,
-  CreateDateColumn,
-  OneToMany
-} from 'typeorm';
+import { Entity, Column, ManyToOne, OneToOne } from 'typeorm';
 import { Assignment } from './Assignment.entity';
 import { Student } from './Student.entity';
 import { BaseEntity } from './BaseEntity.entity';
@@ -37,8 +29,6 @@ export class Submission extends BaseEntity {
   })
   status: AssignmentStatus;
 
-  @CreateDateColumn({
-    nullable: true
-  })
+  @Column({ type: 'timestamp', nullable: true, default: null })
   submittedAt: Date;
 }

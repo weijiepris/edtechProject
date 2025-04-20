@@ -27,6 +27,13 @@ const Header: React.FC<HeaderPropsFirstVariation | HeaderPropsSecondVariation> =
   ...props
 }) => {
   const router = useExpoRouter();
+
+  const determineMiddleSectionLength = (text: string) => {
+    if (text.length > 30) return styles.headerTextSmaller;
+    if (text.length > 20) return styles.headerTextSmall;
+    return styles.headerText;
+  };
+
   return (
     <View style={styles.container}>
       <View>
@@ -41,9 +48,7 @@ const Header: React.FC<HeaderPropsFirstVariation | HeaderPropsSecondVariation> =
       <View style={styles.middleSection}>
         {typeof renderMiddleSection === 'string' ? (
           <>
-            <Text
-              style={renderMiddleSection.length < 25 ? styles.headerText : styles.headerTextSmall}
-            >
+            <Text style={determineMiddleSectionLength(renderMiddleSection)}>
               {renderMiddleSection}
             </Text>
           </>
@@ -80,6 +85,10 @@ const styles = StyleSheet.create({
   },
   headerTextSmall: {
     fontSize: 18,
+    fontWeight: 'bold',
+  },
+  headerTextSmaller: {
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });

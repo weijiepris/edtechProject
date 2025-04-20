@@ -1,13 +1,25 @@
 import { Request, Response } from 'express';
 import { Assignment, Class, Student, StudentClass, Submission } from '../../models';
 import { AssignmentStatus } from '../../utils/constants';
+import { IsNull } from 'typeorm';
 
 export const getAssignmentById = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const { user } = req;
+  if (!user) throw new Error('[getAssignmentById] user not found');
 
   try {
     const assignment = await Assignment.findOneOrFail({
-      where: { uuid: id },
+      where: {
+        uuid: id,
+        submissions: {
+          student: {
+            user: {
+              uuid: user.uuid
+            }
+          }
+        }
+      },
       relations: {
         class: true,
         submissions: true
@@ -39,11 +51,15 @@ export const submitAssignment = async (req: Request, res: Response) => {
       where: { uuid: id }
     });
 
-    const existing = await Submission.findOne({
-      where: { student: { uuid: student.uuid }, assignment: { uuid: assignment.uuid } }
+    const submission = await Submission.findOneOrFail({
+      where: {
+        student: { uuid: student.uuid },
+        assignment: { uuid: assignment.uuid },
+        submittedAt: IsNull()
+      }
     });
 
-    if (existing) {
+    if (submission.submittedAt) {
       res.status(400).json({ message: 'You have already submitted this assignment.' });
       return;
     }
@@ -51,12 +67,10 @@ export const submitAssignment = async (req: Request, res: Response) => {
     const now = new Date();
     const dueDate = new Date(assignment.dueDate);
 
-    const submission = Submission.create({
-      student,
-      assignment,
-      content,
-      status: now > dueDate ? AssignmentStatus.SUBMITTED_LATE : AssignmentStatus.SUBMITTED
-    });
+    submission.content = content;
+    submission.submittedAt = new Date();
+    submission.status =
+      now > dueDate ? AssignmentStatus.SUBMITTED_LATE : AssignmentStatus.SUBMITTED;
 
     await submission.save();
 
