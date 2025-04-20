@@ -27,15 +27,16 @@ const Assignment = () => {
     const fetchData = async () => {
       try {
         const res = await fetchAssignmentsByClass(courseUuid);
-        const processed = res.map(item => {
+
+        console.log(res);
+        const processed = res.assignments.map(item => {
           const dueDate = new Date(item.dueDate);
           const status =
-            item.class.assignments.find(assignment => assignment.uuid === item.uuid)?.submissions[0]
-              ?.status ?? AssignmentStatus.ACTIVE;
+            item.submissions.length > 0 ? item.submissions[0].status : AssignmentStatus.ACTIVE;
           return {
             id: item.uuid,
             title: item.title,
-            subject: item.class?.name ?? 'Unknown Subject',
+            subject: res.name ?? 'Unknown Subject',
             dueDate: format(dueDate, 'dd MMM'),
             daysLeft: differenceInDays(dueDate, new Date()),
             status,

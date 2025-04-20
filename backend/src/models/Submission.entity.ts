@@ -37,6 +37,8 @@ export class Submission extends BaseEntity {
   })
   status: AssignmentStatus;
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    nullable: true
+  })
   submittedAt: Date;
 }

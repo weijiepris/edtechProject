@@ -85,10 +85,21 @@ export const fetchAssignmentWithSubmission = async (req: Request, res: Response)
     });
 
     const classEntity = await Class.findOneOrFail({
-      where: { studentClasses: { uuid: studentClass.uuid } },
+      where: {
+        studentClasses: { uuid: studentClass.uuid },
+        assignments: {
+          submissions: {
+            student: {
+              uuid: studentClass.student.uuid
+            }
+          }
+        }
+      },
       relations: {
         assignments: {
-          submissions: true
+          submissions: {
+            student: true
+          }
         }
       }
     });

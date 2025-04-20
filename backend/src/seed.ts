@@ -146,6 +146,13 @@ const loadSeed = async (): Promise<void> => {
   });
   await studentClass3.save();
 
+  const studentClass4 = StudentClass.create({
+    student: student2,
+    class: classEntity,
+    status: 'active'
+  });
+  await studentClass4.save();
+
   const chat = Chat.create({
     userA: studentUser,
     userB: studentUser2
@@ -212,24 +219,6 @@ const loadSeed = async (): Promise<void> => {
   teacherChat.lastMessage = teacherMessage3;
   await teacherChat.save();
 
-  const assignment = Assignment.create({
-    class: classEntity,
-    title: 'Algebra Homework',
-    description: 'Complete all questions from chapter 5',
-    dueDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
-  });
-  await assignment.save();
-
-  const submission = Submission.create({
-    student: student,
-    assignment: assignment,
-    content: 'Answers to the assignment',
-    submittedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
-    grade: '10/10',
-    status: AssignmentStatus.SUBMITTED
-  });
-  await submission.save();
-
   const assignment1 = Assignment.create({
     title: 'Assignment 1 - Algebra Homework',
     description: 'Complete all questions from chapter 5 of Algebra workbook.',
@@ -237,6 +226,14 @@ const loadSeed = async (): Promise<void> => {
     class: classEntity
   });
   await assignment1.save();
+
+  const assignment = Assignment.create({
+    class: classEntity,
+    title: 'Algebra Homework',
+    description: 'Complete all questions from chapter 5',
+    dueDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
+  });
+  await assignment.save();
 
   const assignment2 = Assignment.create({
     title: 'Assignment 2 - Trigonometry Worksheet',
@@ -253,6 +250,16 @@ const loadSeed = async (): Promise<void> => {
     class: classEntity
   });
   await assignment3.save();
+
+  const submission = Submission.create({
+    student: student,
+    assignment: assignment,
+    content: 'Answers to the assignment',
+    submittedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
+    grade: '10/10',
+    status: AssignmentStatus.SUBMITTED
+  });
+  await submission.save();
 
   const submission1 = Submission.create({
     content: 'Answers to chapter 5. Please see attached file.',
@@ -272,6 +279,53 @@ const loadSeed = async (): Promise<void> => {
     status: AssignmentStatus.SUBMITTED
   });
   await submission2.save();
+
+  const submission3 = Submission.create({
+    content: '',
+    assignment: assignment3,
+    student: student,
+    status: AssignmentStatus.ACTIVE
+  });
+
+  await submission3.save();
+
+  const submissionn = Submission.create({
+    student: student2,
+    assignment: assignment,
+    content: 'Answers to the assignment',
+    submittedAt: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000),
+    grade: '0/10',
+    status: AssignmentStatus.SUBMITTED_LATE
+  });
+  await submissionn.save();
+
+  const submissionn1 = Submission.create({
+    content: 'Answers to chapter 5. Please see attached file.',
+    grade: '0/10',
+    assignment: assignment1,
+    student: student2,
+    submittedAt: new Date('2025-04-29'),
+    status: AssignmentStatus.SUBMITTED_LATE
+  });
+  await submissionn1.save();
+
+  const submissionn2 = Submission.create({
+    content: 'submitted',
+    assignment: assignment2,
+    student: student2,
+    submittedAt: new Date('2025-04-29'),
+    status: AssignmentStatus.SUBMITTED
+  });
+  await submissionn2.save();
+
+  const submissionn3 = Submission.create({
+    content: '',
+    assignment: assignment3,
+    student: student2,
+    status: AssignmentStatus.ACTIVE
+  });
+
+  await submissionn3.save();
 
   console.log('Demo data loaded');
   process.exit(0);

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { StudentClass, Assignment } from '../../models';
+import { StudentClass, Assignment, Class } from '../../models';
 import { Student } from '../../models/Student.entity';
 
 export const getClasses = async (req: Request, res: Response) => {
@@ -42,20 +42,30 @@ export const getClasses = async (req: Request, res: Response) => {
 
 export const getAssignmentsByClass = async (req: Request, res: Response) => {
   const { courseUuid } = req.params;
+  const { user } = req;
+
+  if (!user) throw new Error('[getAssignmentsByClass] unable to find user');
 
   try {
-    const assignments = await Assignment.find({
-      where: { class: { uuid: courseUuid } },
-      relations: {
-        class: {
-          assignments: {
-            submissions: true
-          }
+    const student = await Student.findOne({
+      where: {
+        user: {
+          uuid: user.uuid
         }
       }
     });
+    if (!student) throw new Error('[getAssignmentsByClass] unable to find student');
 
-    res.json(assignments);
+    const classEntity = await Class.createQueryBuilder('class')
+      .leftJoinAndSelect('class.assignments', 'assignment')
+      .leftJoinAndSelect('assignment.submissions', 'submission')
+      .leftJoinAndSelect('submission.student', 'student')
+      .where('class.uuid = :courseUuid', { courseUuid })
+      .andWhere('student.uuid = :studentUuid', { studentUuid: student.uuid })
+      .getOne();
+
+    classEntity?.assignments.forEach(ass => console.log(ass.submissions));
+    res.json(classEntity);
     return;
   } catch (error) {
     console.error('Error fetching assignments by class:', error);
