@@ -74,8 +74,10 @@ export interface IParent extends IBaseEntity {}
 export interface ISubmission extends IBaseEntity {
   content: string;
   grade: string;
+  assignment: IAssignment;
   status: AssignmentStatus;
   submittedAt: Date;
+  student: IStudent;
 }
 
 export interface IAssignment extends IBaseEntity {

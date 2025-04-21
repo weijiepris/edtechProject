@@ -39,7 +39,7 @@ const loadSeed = async (): Promise<void> => {
     age: 40,
     email: 'test@here.com',
     password: '$2b$10$SFtoOzAnFNNzohZUMDwGRuYnndzxC3sieNkBHJJ58MzMePMiHj.36',
-    role: UserRoles.PARENT
+    role: UserRoles.TEACHER
   });
 
   await user.save();
@@ -101,7 +101,7 @@ const loadSeed = async (): Promise<void> => {
     age: 35,
     email: 'emily.smith@example.com',
     password: '$2b$10$SFtoOzAnFNNzohZUMDwGRuYnndzxC3sieNkBHJJ58MzMePMiHj.36',
-    role: UserRoles.PARENT
+    role: UserRoles.TEACHER
   });
   await teacherUser.save();
 

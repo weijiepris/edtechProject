@@ -2,6 +2,7 @@ import { Router } from 'express';
 import classRouter from './student';
 import authRouter from './auth';
 import userRouter from './user';
+import teacherRouter from './teacher';
 import assignmentRouter from './assignment';
 import chatRouter from './chat';
 import { requestLogger } from '../middleware/requestLogger';
@@ -12,6 +13,7 @@ export const useRoutes = (app: Router): void => {
   app.use('/auth', authRouter);
   app.use('/user', userRouter);
   app.use('/student', classRouter);
+  app.use('/teacher', teacherRouter);
   app.use('/assignment', assignmentRouter);
   app.use('/chat', chatRouter);
 };

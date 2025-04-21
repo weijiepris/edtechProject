@@ -24,6 +24,8 @@ export default function Layout() {
           <Stack.Screen name="grades/index" />
           <Stack.Screen name="assignment/index" />
           <Stack.Screen name="leaderboard/index" />
+          <Stack.Screen name="submission/index" />
+          <Stack.Screen name="grading/index" />
           <Stack.Screen name="notification/index" />
         </Stack>
         <Toast />

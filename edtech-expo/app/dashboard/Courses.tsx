@@ -1,10 +1,10 @@
 import { Entypo } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { IClass, IStudentClass } from '../utils/constants';
-import { fetchStudentClasses } from '../services/Class.service';
-import Toast from 'react-native-toast-message';
+import { IStudentClass, UserRoles } from '../utils/constants';
+import { fetchStudentClasses, fetchTeacherClasses } from '../services/Class.service';
 import { useExpoRouter } from 'expo-router/build/global-state/router-store';
+import useAccount from '../hooks/useAccount';
 
 interface ICourses {}
 
@@ -12,15 +12,28 @@ const Courses: React.FC<ICourses> = ({}) => {
   const router = useExpoRouter();
   const [classes, setClasses] = useState<IStudentClass[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const { user } = useAccount();
 
   useEffect(() => {
+    console.log(user);
+
+    if (!user) return;
+
+    const fn =
+      user.role === UserRoles.STUDENT
+        ? fetchStudentClasses
+        : user.role === UserRoles.TEACHER
+          ? fetchTeacherClasses
+          : fetchStudentClasses;
+
     setLoading(true);
-    fetchStudentClasses()
+    fn()
       .then(data => {
+        console.log(data);
         setClasses(Array.isArray(data) ? data : []);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [user]);
 
   const onCourseTab = ({
     courseUuid,

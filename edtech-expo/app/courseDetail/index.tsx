@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { useLocalSearchParams } from 'expo-router';
 import Header from '../components/Header';
 import { useExpoRouter } from 'expo-router/build/global-state/router-store';
+import useAccount from '../hooks/useAccount';
+import { UserRoles } from '../utils/constants';
 
 const CourseDetails = () => {
   const { courseUuid, courseName, courseCode } = useLocalSearchParams<{
@@ -11,6 +13,7 @@ const CourseDetails = () => {
     courseCode: string;
   }>();
   const router = useExpoRouter();
+  const { user } = useAccount();
 
   const handleOnPress = (pathName: string) => {
     router.push({
@@ -34,17 +37,32 @@ const CourseDetails = () => {
       />
 
       <ScrollView style={styles.sectionList}>
-        <TouchableOpacity style={styles.card} onPress={() => handleOnPress('/assignment')}>
-          <Text style={styles.cardText}>📚 View Assignments</Text>
-        </TouchableOpacity>
+        {user?.role === UserRoles.STUDENT && (
+          <>
+            <TouchableOpacity style={styles.card} onPress={() => handleOnPress('/assignment')}>
+              <Text style={styles.cardText}>📚 View Assignments</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.card} onPress={() => handleOnPress(`/grades`)}>
+              <Text style={styles.cardText}>📊 View Gradings</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity style={styles.card} onPress={() => handleOnPress(`/grades`)}>
-          <Text style={styles.cardText}>📊 View Gradings</Text>
-        </TouchableOpacity>
+            <TouchableOpacity style={styles.card} onPress={() => router.push('/announcements')}>
+              <Text style={styles.cardText}>📢 View Announcements</Text>
+            </TouchableOpacity>
+          </>
+        )}
 
-        <TouchableOpacity style={styles.card} onPress={() => router.push('/announcements')}>
-          <Text style={styles.cardText}>📢 View Announcements</Text>
-        </TouchableOpacity>
+        {user?.role === UserRoles.TEACHER && (
+          <>
+            <TouchableOpacity style={styles.card} onPress={() => handleOnPress(`/submission`)}>
+              <Text style={styles.cardText}>📝 View Submissions</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.card} onPress={() => handleOnPress(`/grading`)}>
+              <Text style={styles.cardText}>🧮 Grade Submissions</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </ScrollView>
     </View>
   );

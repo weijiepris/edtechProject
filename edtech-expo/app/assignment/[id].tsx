@@ -3,26 +3,32 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'reac
 import { useLocalSearchParams } from 'expo-router';
 import Header from '../components/Header';
 import { fetchAssignmentDetails, submitAssignment } from '../services/Assignment.service';
-import { IAssignment } from '../utils/constants';
+import { IAssignment, UserRoles } from '../utils/constants';
 import { useExpoRouter } from 'expo-router/build/global-state/router-store';
+import useAccount from '../hooks/useAccount';
 
 const AssignmentDetails = () => {
   const { id: assignmentId } = useLocalSearchParams<{ id: string }>();
   const [assignment, setAssignment] = useState<IAssignment>();
   const [submissionText, setSubmissionText] = useState('');
   const router = useExpoRouter();
+  const { user } = useAccount();
 
   useEffect(() => {
-    const fetchDetails = async () => {
-      try {
-        const res = await fetchAssignmentDetails(assignmentId);
-        setAssignment(res);
-      } catch (error) {
-        Alert.alert('Error', 'Unable to fetch assignment details');
-      }
-    };
-    fetchDetails();
-  }, [assignmentId]);
+    if (!user) return;
+
+    if (user.role === UserRoles.STUDENT) {
+      const fetchDetails = async () => {
+        try {
+          const res = await fetchAssignmentDetails(assignmentId);
+          setAssignment(res);
+        } catch (error) {
+          Alert.alert('Error', 'Unable to fetch assignment details');
+        }
+      };
+      fetchDetails();
+    }
+  }, [assignmentId, user]);
 
   const handleSubmit = async () => {
     try {
