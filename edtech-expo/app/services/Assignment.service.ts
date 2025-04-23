@@ -20,3 +20,11 @@ export const gradeSubmission = async (submissionId: string, grade: string) => {
   const res = await api.post(`${BASE_URL}/teacher/submission/${submissionId}/grade`, { grade });
   return res.data;
 };
+
+export const fetchChildAssignmentGrades = async (
+  classId: string,
+  childId: string,
+): Promise<IClass> => {
+  const res = await api.get(`${BASE_URL}/parent/class/${classId}/assignments/${childId}/grades`);
+  return res.data;
+};

@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET, JWT_EXPIRE_DURATION } from '../../utils';
 
 export const test = (req: Request, res: Response, next: NextFunction) => {
-  console.log('from test:', req.user);
   res.send({ test: 'hello' });
 };
 

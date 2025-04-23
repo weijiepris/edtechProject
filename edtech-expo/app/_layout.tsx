@@ -27,6 +27,8 @@ export default function Layout() {
           <Stack.Screen name="submission/index" />
           <Stack.Screen name="grading/index" />
           <Stack.Screen name="notification/index" />
+          <Stack.Screen name="chlidassignment/index" />
+          <Stack.Screen name="childgrade/index" />
         </Stack>
         <Toast />
       </AuthProvider>

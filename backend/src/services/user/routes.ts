@@ -5,8 +5,6 @@ export const getProfile = async (req: Request, res: Response) => {
   try {
     const { uuid } = req.user ?? {};
 
-    console.log({ uuid });
-
     if (!uuid) {
       res.status(401).json({ message: 'Unauthorized' });
       return;
@@ -33,10 +31,8 @@ export const getProfile = async (req: Request, res: Response) => {
 export const updateProfile = async (req: Request, res: Response) => {
   try {
     const { firstName, lastName, age, email } = req.body;
-    console.log({ body: req.body });
     const { uuid } = req.user ?? {};
 
-    console.log({ uuid });
     if (!uuid) {
       res.status(401).json({ message: 'Unauthorized' });
       return;

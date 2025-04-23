@@ -11,9 +11,6 @@ export const isLoggedIn = async (
   const authHeader = req.headers['authorization'];
   const sessionToken = req.session.token;
 
-  if (authHeader) {
-    console.log('token exist!', authHeader);
-  }
   if (!authHeader && !sessionToken) {
     console.error({ authError: 'Unauthorized: no token found' });
     res.status(401).json({ message: 'You are not authenticated, please login' });

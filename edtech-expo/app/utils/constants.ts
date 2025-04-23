@@ -129,3 +129,12 @@ export const OnlineStatusMapping = new Map<OnlineStatus, string>([
   [OnlineStatus.ONLINE, 'Online'],
   [OnlineStatus.OFFLINE, 'Offline'],
 ]);
+
+export interface ParentChildCourse {
+  courseCode: string;
+  courseName: string;
+  children: {
+    uuid: string;
+    name: string;
+  }[];
+}

@@ -76,7 +76,6 @@ const setupSocket = (server: http.Server) => {
     });
     socket.on('get_messages', async ({ chatId }) => {
       try {
-        console.log('here', chatId);
         const chat = await Chat.findOneOrFail({
           where: {
             uuid: chatId

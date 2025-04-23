@@ -1,10 +1,12 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import Header from '../components/Header';
 import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 import useAccount from '../hooks/useAccount';
-import { UserRoles } from '../utils/constants';
+import { IUser, UserRoles } from '../utils/constants';
+import { fetchChildrenByClass } from '../services/Class.service';
+import ChildCard from './ChildCard';
 
 const CourseDetails = () => {
   const { courseUuid, courseName, courseCode } = useLocalSearchParams<{
@@ -14,12 +16,39 @@ const CourseDetails = () => {
   }>();
   const router = useExpoRouter();
   const { user } = useAccount();
+  const [children, setChildren] = useState<IUser[]>([]);
+
+  useEffect(() => {
+    const loadChildren = async () => {
+      try {
+        if (user?.role === UserRoles.PARENT) {
+          const res = await fetchChildrenByClass(courseUuid);
+          setChildren(res);
+        }
+      } catch (error) {
+        Alert.alert('Error', 'Failed to fetch children for selected course.');
+        console.error(error);
+      }
+    };
+
+    loadChildren();
+  }, [user, courseUuid]);
 
   const handleOnPress = (pathName: string) => {
     router.push({
       pathname: pathName,
       params: {
         courseUuid,
+      },
+    });
+  };
+
+  const handleOnPressParent = (pathName: string, childId: string) => {
+    router.push({
+      pathname: pathName,
+      params: {
+        courseUuid,
+        childId,
       },
     });
   };
@@ -45,7 +74,6 @@ const CourseDetails = () => {
             <TouchableOpacity style={styles.card} onPress={() => handleOnPress(`/grades`)}>
               <Text style={styles.cardText}>📊 View Gradings</Text>
             </TouchableOpacity>
-
             <TouchableOpacity style={styles.card} onPress={() => router.push('/announcements')}>
               <Text style={styles.cardText}>📢 View Announcements</Text>
             </TouchableOpacity>
@@ -57,10 +85,18 @@ const CourseDetails = () => {
             <TouchableOpacity style={styles.card} onPress={() => handleOnPress(`/submission`)}>
               <Text style={styles.cardText}>📝 View Submissions</Text>
             </TouchableOpacity>
-
             <TouchableOpacity style={styles.card} onPress={() => handleOnPress(`/grading`)}>
               <Text style={styles.cardText}>🧮 Grade Submissions</Text>
             </TouchableOpacity>
+          </>
+        )}
+
+        {user?.role === UserRoles.PARENT && (
+          <>
+            <Text style={styles.parentLabel}>Your children in this course:</Text>
+            {children.map(child => (
+              <ChildCard key={child.uuid} child={child} handleOnPress={handleOnPressParent} />
+            ))}
           </>
         )}
       </ScrollView>
@@ -100,5 +136,10 @@ const styles = StyleSheet.create({
   cardText: {
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  parentLabel: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 12,
   },
 });

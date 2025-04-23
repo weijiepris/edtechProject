@@ -2,7 +2,11 @@ import { Entypo } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { IStudentClass, UserRoles } from '../utils/constants';
-import { fetchStudentClasses, fetchTeacherClasses } from '../services/Class.service';
+import {
+  fetchParentChildClasses,
+  fetchStudentClasses,
+  fetchTeacherClasses,
+} from '../services/Class.service';
 import { useExpoRouter } from 'expo-router/build/global-state/router-store';
 import useAccount from '../hooks/useAccount';
 
@@ -15,21 +19,27 @@ const Courses: React.FC<ICourses> = ({}) => {
   const { user } = useAccount();
 
   useEffect(() => {
-    console.log(user);
-
     if (!user) return;
 
-    const fn =
-      user.role === UserRoles.STUDENT
-        ? fetchStudentClasses
-        : user.role === UserRoles.TEACHER
-          ? fetchTeacherClasses
-          : fetchStudentClasses;
+    let fetchFn;
+
+    switch (user.role) {
+      case UserRoles.STUDENT:
+        fetchFn = fetchStudentClasses;
+        break;
+      case UserRoles.TEACHER:
+        fetchFn = fetchTeacherClasses;
+        break;
+      case UserRoles.PARENT:
+        fetchFn = fetchParentChildClasses;
+        break;
+      default:
+        return;
+    }
 
     setLoading(true);
-    fn()
+    fetchFn()
       .then(data => {
-        console.log(data);
         setClasses(Array.isArray(data) ? data : []);
       })
       .finally(() => setLoading(false));
@@ -65,7 +75,7 @@ const Courses: React.FC<ICourses> = ({}) => {
         {classes.map(cls => (
           <TouchableOpacity
             style={styles.courseTabs}
-            key={cls.uuid}
+            key={`${cls.class.uuid}`}
             onPress={() =>
               onCourseTab({
                 courseUuid: cls.class.uuid,
