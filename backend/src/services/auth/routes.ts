@@ -65,11 +65,9 @@ export const register = async (req: Request, res: Response) => {
       return;
     }
 
-    // Hash password
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create new user
     const newUser = User.create({
       firstName,
       lastName,
@@ -80,7 +78,6 @@ export const register = async (req: Request, res: Response) => {
 
     await User.save(newUser);
 
-    // Generate JWT token
     const token = jwt.sign({ uuid: newUser.uuid, email: newUser.email }, JWT_SECRET, {
       expiresIn: parseInt(JWT_EXPIRE_DURATION)
     });

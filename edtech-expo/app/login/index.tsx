@@ -14,10 +14,12 @@ const Login: React.FC<ILogin> = ({}) => {
   const { validateToken } = useAuth();
   const router = useExpoRouter();
 
-  // const [email, setEmail] = useState('john.doe@example.com'); //student
-  // const [email, setEmail] = useState('john.dumma@example.com'); //student
-  // const [email, setEmail] = useState('emily.smith@example.com'); //teacher
-  const [email, setEmail] = useState('jane.derp@example.com'); //parent
+  const [email, setEmail] = useState('studentA@example.com'); //studentA
+  // const [email, setEmail] = useState('studentB@example.com'); //studentB
+  // const [email, setEmail] = useState('studentC@example.com'); //studentC
+  // const [email, setEmail] = useState('teacher@example.com'); //teacher
+  // const [email, setEmail] = useState('parentA@example.com'); //parentA
+  // const [email, setEmail] = useState('parentB@example.com'); //parentB
   const [hasEmailError, setHasEmailError] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
   const [password, setPassword] = useState('password');

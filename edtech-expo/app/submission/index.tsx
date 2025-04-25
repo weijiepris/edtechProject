@@ -60,10 +60,13 @@ const SubmissionScreen = () => {
               {submission.student.user.firstName} {submission.student.user.lastName}
             </Text>
             <Text numberOfLines={2} style={styles.preview}>
-              {submission.content}
+              {submission.content ? `Answer: ${submission.content}` : ''}
             </Text>
             <Text style={styles.timestamp}>
-              Submitted: {format(new Date(submission.submittedAt), 'dd MMM yyyy, HH:mm')}
+              Submitted:
+              {submission.submittedAt
+                ? format(new Date(submission.submittedAt), 'dd MMM yyyy, HH:mm')
+                : 'Not submitted yet'}
             </Text>
             <Text
               style={[styles.grade, submission.grade !== '-' ? styles.graded : styles.notGraded]}

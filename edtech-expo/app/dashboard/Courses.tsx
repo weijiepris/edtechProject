@@ -84,7 +84,13 @@ const Courses: React.FC<ICourses> = ({}) => {
               })
             }
           >
-            <Text style={styles.courseTitle}>
+            <Text
+              style={
+                cls.class.courseType.length + cls.class.courseCode.length < 10
+                  ? styles.courseTitle
+                  : styles.courseTitleSmall
+              }
+            >
               {`${cls.class.courseType} ${cls.class.courseCode}`}
               <Entypo name="chevron-right" size={24} color="black" />
             </Text>
@@ -116,6 +122,13 @@ const styles = StyleSheet.create({
   courseTitle: {
     fontWeight: 'bold',
     fontSize: 24,
+    marginLeft: 11,
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  courseTitleSmall: {
+    fontWeight: 'bold',
+    fontSize: 10,
     marginLeft: 11,
     marginTop: 4,
     marginBottom: 4,

@@ -55,7 +55,10 @@ const Badges: React.FC = () => {
             const initials =
               `${item.partner.firstName[0] ?? ''}${item.partner.lastName[0] ?? ''}`.toUpperCase();
             return (
-              <View key={index} style={styles.initialsIcon}>
+              <View
+                key={index}
+                style={partners.length < 4 ? styles.initialsIcon : styles.initialsIconSmall}
+              >
                 <Text style={styles.initialsText}>{initials}</Text>
               </View>
             );
@@ -119,6 +122,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D9',
     height: 36,
     width: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  initialsIconSmall: {
+    backgroundColor: '#D9D9D9',
+    height: 30,
+    width: 30,
     borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
