@@ -51,13 +51,18 @@ const loadSeed = async (): Promise<void> => {
     return user;
   };
 
-  const teacherUser = await createUser('Teacher', 'One', 'teacher@example.com', UserRoles.TEACHER);
-  const parentAUser = await createUser('Parent', 'A', 'parentA@example.com', UserRoles.PARENT);
-  const parentBUser = await createUser('Parent', 'B', 'parentB@example.com', UserRoles.PARENT);
+  const teacherUser = await createUser('Dan', 'Neil', 'teacher@example.com', UserRoles.TEACHER);
+  const parentAUser = await createUser('Louie', 'Smith', 'parentA@example.com', UserRoles.PARENT);
+  const parentBUser = await createUser('John', 'Cheng', 'parentB@example.com', UserRoles.PARENT);
 
   const studentAUser = await createUser('Student', 'A', 'studentA@example.com', UserRoles.STUDENT);
-  const studentBUser = await createUser('Student', 'B', 'studentB@example.com', UserRoles.STUDENT);
-  const studentCUser = await createUser('Student', 'C', 'studentC@example.com', UserRoles.STUDENT);
+  const studentBUser = await createUser('Jane', 'Smith', 'studentB@example.com', UserRoles.STUDENT);
+  const studentCUser = await createUser(
+    'Javio',
+    'Cheng',
+    'studentC@example.com',
+    UserRoles.STUDENT
+  );
 
   const parentA = Parent.create({ user: parentAUser });
   const parentB = Parent.create({ user: parentBUser });
@@ -107,28 +112,28 @@ const loadSeed = async (): Promise<void> => {
       title: 'Addition Basics',
       description:
         'Practice solving linear equations with one variable and simplify algebraic expressions using addition rules.',
-      dueDate: new Date('2025-03-01'),
+      dueDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
       class: mathClass
     },
     {
       title: 'Subtraction Essentials',
       description:
         'Solve problems involving angles in triangles and apply basic geometric theorems to subtract and find unknown values.',
-      dueDate: new Date('2025-03-05'),
+      dueDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
       class: mathClass
     },
     {
       title: 'Multiplication Practice',
       description:
         'Use trigonometric ratios (sine, cosine, tangent) to calculate missing side lengths and angles in right triangles.',
-      dueDate: new Date('2025-04-10'),
+      dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
       class: mathClass
     },
     {
       title: 'Division & Probability',
       description:
         'Analyze data sets to calculate mean, median, and mode. Solve introductory probability problems using division and ratios.',
-      dueDate: new Date('2025-04-15'),
+      dueDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
       class: mathClass
     }
   ];
@@ -138,35 +143,35 @@ const loadSeed = async (): Promise<void> => {
       title: 'Phonics',
       description:
         'Practice phonetic decoding by identifying vowel and consonant sounds in a provided word list. Submit with phonetic symbols.',
-      dueDate: new Date('2025-03-02'),
+      dueDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
       class: englishClass
     },
     {
       title: 'Nouns',
       description:
         'Complete the worksheet identifying proper, common, abstract, and collective nouns in context. Provide your own examples as well.',
-      dueDate: new Date('2025-03-06'),
+      dueDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
       class: englishClass
     },
     {
       title: 'Vocabulary',
       description:
         'Demonstrate mastery of 10 new vocabulary words by using them in original, context-rich sentences. Include definitions.',
-      dueDate: new Date('2025-04-09'),
+      dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
       class: englishClass
     },
     {
       title: 'Final Test 1',
       description:
         'Write a literary essay analyzing character growth and moral dilemmas in "To Kill a Mockingbird". Cite specific passages.',
-      dueDate: new Date('2025-04-13'),
+      dueDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
       class: englishClass
     },
     {
       title: 'Final Test 2',
       description:
         'Compose a short mystery story (500–700 words) that builds suspense and includes an unexpected plot twist.',
-      dueDate: new Date('2025-05-17'),
+      dueDate: new Date(Date.now() + 11 * 24 * 60 * 60 * 1000),
       class: englishClass
     }
   ];
@@ -210,9 +215,9 @@ const loadSeed = async (): Promise<void> => {
           {
             assignment: mathAssignments[0],
             content: '1+1=1',
+            status: AssignmentStatus.ACTIVE,
             submittedAt: new Date(),
-            status: AssignmentStatus.SUBMITTED_LATE,
-            grade: '3/10'
+            grade: '10/10'
           },
           {
             assignment: mathAssignments[1],
@@ -222,10 +227,9 @@ const loadSeed = async (): Promise<void> => {
           },
           {
             assignment: mathAssignments[2],
-            content: '1x2=3',
-            submittedAt: new Date(),
+            content: '',
             status: AssignmentStatus.SUBMITTED,
-            grade: '5/10'
+            grade: '-'
           },
           {
             assignment: mathAssignments[3],
@@ -237,24 +241,22 @@ const loadSeed = async (): Promise<void> => {
         english: [
           {
             assignment: englishAssignments[0],
-            content: 'Pollution harms.',
-            submittedAt: new Date(),
+            content: 'Clear water.',
             status: AssignmentStatus.SUBMITTED,
+            submittedAt: new Date(),
             grade: '10/10'
           },
           {
             assignment: englishAssignments[1],
-            content: 'Dogs bark.',
-            submittedAt: new Date(),
-            status: AssignmentStatus.SUBMITTED_LATE,
-            grade: '9/10'
+            content: '',
+            status: AssignmentStatus.ACTIVE,
+            grade: '-'
           },
           {
             assignment: englishAssignments[2],
-            content: 'Brave knight.',
-            submittedAt: new Date(),
-            status: AssignmentStatus.SUBMITTED,
-            grade: '10/10'
+            content: '',
+            status: AssignmentStatus.ACTIVE,
+            grade: '-'
           },
           {
             assignment: englishAssignments[3],
@@ -276,7 +278,7 @@ const loadSeed = async (): Promise<void> => {
             assignment: mathAssignments[0],
             content: '2+2=4',
             submittedAt: new Date(),
-            status: AssignmentStatus.SUBMITTED,
+            status: AssignmentStatus.SUBMITTED_LATE,
             grade: '10/10'
           },
           {
@@ -328,7 +330,7 @@ const loadSeed = async (): Promise<void> => {
             content: 'Justice wins.',
             submittedAt: new Date(),
             status: AssignmentStatus.SUBMITTED,
-            grade: '10/10'
+            grade: '-'
           },
           {
             assignment: englishAssignments[4],

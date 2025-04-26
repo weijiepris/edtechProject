@@ -34,7 +34,7 @@ const AssignmentDetails = () => {
     try {
       await submitAssignment(assignmentId, submissionText);
       Alert.alert('Success', 'Assignment submitted successfully');
-      router.goBack();
+      router.replace('dashboard');
     } catch (error: any) {
       const message =
         error?.response?.data?.message || error?.message || 'Failed to submit assignment';

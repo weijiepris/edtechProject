@@ -97,7 +97,9 @@ const Assignment = () => {
                     item.daysLeft <= 1 ? styles.dueUrgent : styles.dueWarning,
                   ]}
                 >
-                  {item.daysLeft} day{item.daysLeft > 1 ? 's' : ''} left
+                  {item.daysLeft < 0
+                    ? 'Submission overdue'
+                    : `${item.daysLeft} day${item.daysLeft > 1 ? 's' : ''} left`}
                 </Text>
               )}
 
