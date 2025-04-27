@@ -17,7 +17,11 @@ Ensure you are using Node.js version **v23.10.0**, which was used during develop
 Install Docker to manage the PostgreSQL container for the backend:  
 ➡️ [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
 
----
+Important: Environment to Run make Commands
+This project uses a Makefile to automate setup and startup processes.
+✅ You must be on Mac, Linux, or Windows with WSL (Windows Subsystem for Linux) to run make commands.
+
+## 🔹 If you are on Windows, please install WSL and use a WSL terminal (e.g., Ubuntu) to proceed.
 
 ## 2. Setting Up Environment Variables
 
