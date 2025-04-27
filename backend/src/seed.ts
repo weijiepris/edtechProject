@@ -215,7 +215,7 @@ const loadSeed = async (): Promise<void> => {
           {
             assignment: mathAssignments[0],
             content: '1+1=1',
-            status: AssignmentStatus.ACTIVE,
+            status: AssignmentStatus.SUBMITTED,
             submittedAt: new Date(),
             grade: '10/10'
           },
@@ -228,7 +228,7 @@ const loadSeed = async (): Promise<void> => {
           {
             assignment: mathAssignments[2],
             content: '',
-            status: AssignmentStatus.SUBMITTED,
+            status: AssignmentStatus.ACTIVE,
             grade: '-'
           },
           {
